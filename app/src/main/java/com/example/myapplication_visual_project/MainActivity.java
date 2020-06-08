@@ -3,6 +3,7 @@ package com.example.myapplication_visual_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -31,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
         button1 = (Button) findViewById(R.id.button1);
         registerForContextMenu(button1);
 
-
-        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
-        long selectedDate = calendarView.getDate();
 
     }
 
@@ -78,18 +77,37 @@ public class MainActivity extends AppCompatActivity {
 
   */
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //super.onOptionsItemSelected(item);
+
+        Toast toast = Toast.makeText(getApplicationContext(),"", Toast.LENGTH_LONG);
+
         switch (item.getItemId()) {
             case R.id.month:
-                return true;
+
+                toast.setText("month");
+
+
+                break;
+
+
+
             case R.id.week:
-                return true;
+                toast.setText("지도");
+                Intent homeIntent = new Intent(this, weekactivity.class);
+                startActivity(homeIntent);
+
+                break;
         }
 
-        return false;
+        toast.show();
+
+        return super.onOptionsItemSelected(item);
     }
+
+
 }
 
 
