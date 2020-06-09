@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".weekactivity">
+    tools:context=".weekactivity"
+    android:id="@+id/baseLayout">
 
 
     <LinearLayout
@@ -88,7 +89,7 @@
 
         android:layout_width="match_parent"
 
-        android:layout_height="620dp">
+        android:layout_height="485dp">
 
         <LinearLayout
 
@@ -97,6 +98,10 @@
             android:layout_height="match_parent"
 
             android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
 
 
