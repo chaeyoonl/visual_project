@@ -1,6 +1,7 @@
 package com.example.myapplication_visual_project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     LinearLayout baseLayout;
@@ -146,6 +148,21 @@ public class MainActivity extends AppCompatActivity {
         gridAdapter = new GridAdapter(getApplicationContext(), dayList);
         gridView.setAdapter(gridAdapter);
 
+        //gridView클릭시..
+        gridView.setOnItemClickListener(this);
+        //gridView.setOnItemLongClickListener(new ListViewItemLingClickKistener());
+        gridView.setOnItemClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //gridview 를 textview가 아니라 button으로 만들자!!
+        //그리고 그 버튼을 클릭할 때 ~
+
 
 
         //////////////////////////////////////////////////////////////////////////
@@ -159,6 +176,9 @@ public class MainActivity extends AppCompatActivity {
 
                 mCal = null;
                 gridView.setAdapter(null);
+                ver = 0;
+                monthlist = 0;
+                year = 1;
 
 
                 // 오늘에 날짜를 세팅 해준다.
@@ -219,8 +239,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
             }
+
+
         });
+
+
 
 
 
@@ -245,20 +271,24 @@ public class MainActivity extends AppCompatActivity {
 
 
                 //위의 textview 부분에서 날짜를 변경하는 부분.
-
+/*
                 ver--;
                 if ((cal.get(Calendar.MONTH) + ver) == 0) {
                     //그 전년도로 이동
                     ver = 0;
-                    year++;
-                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
+                    //year++;
+                    tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
 
                 }else if((cal.get(Calendar.YEAR) - year) != 2020) {
-                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
+                    tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
                 }else {
 
-                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + ver));
-                }
+
+ */
+
+                ver--;
+                    tvDate.setText((cal.get(Calendar.YEAR) ) + "/" + (cal.get(Calendar.MONTH) + ver));
+                //}
 
 
 
@@ -300,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                setCalendarDate(mCal.get(Calendar.MONTH) - 1);
+                setCalendarDate(Integer.parseInt(curMonthFormat.format(date)) - 1 - monthlist);
                 gridAdapter = new GridAdapter(getApplicationContext(), dayList);
                 gridView.setAdapter(gridAdapter);
 
@@ -316,6 +346,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -337,19 +369,21 @@ public class MainActivity extends AppCompatActivity {
                 gridView.setAdapter(null);
 
                 ver++;
-
+/*
                 if ((cal.get(Calendar.MONTH) + ver) == 13) {
                     //그 다음년도로 이동
                     ver = 0;
-                    year++;
-                    tvDate.setText((cal.get(Calendar.YEAR) + year) + "/" + (cal.get(Calendar.MONTH) - 5 + ver));
+                    //year++;
+                    tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) - 5 + ver));
 
                 }else if((cal.get(Calendar.YEAR) + year) != 2020) {
-                    tvDate.setText((cal.get(Calendar.YEAR) + year) + "/" + (cal.get(Calendar.MONTH) -5 + ver));
+                    tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) -5 + ver));
                 }else {
 
-                    tvDate.setText((cal.get(Calendar.YEAR) + year) + "/" + (cal.get(Calendar.MONTH) + ver));
-                }
+
+ */
+                    tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + ver));
+                //}
 
 
 
@@ -393,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                setCalendarDate(mCal.get(Calendar.MONTH) - 1);
+                setCalendarDate(mCal.get(Calendar.MONTH) + monthlist);
                 gridAdapter = new GridAdapter(getApplicationContext(), dayList);
                 gridView.setAdapter(gridAdapter);
 
@@ -471,6 +505,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
+
         });
 
 
@@ -478,6 +513,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
     @Override
@@ -548,6 +584,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        View dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog_month, null);
+        //AlertDialog.Builder dlg = new AlartDialog.Builder(MainActivity.this)
+
+
+
+    }
 
 
     /**

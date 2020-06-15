@@ -50,6 +50,7 @@ public class weekactivity extends AppCompatActivity {
     int j = 0;
     int addday = 0;
     int addday2 = 0;
+    int lastmonth = 0;
 
     /**
      * 연/월 텍스트뷰
@@ -679,8 +680,8 @@ public class weekactivity extends AppCompatActivity {
                 long now = System.currentTimeMillis();
                 final Date date = new Date(now);
 
+                addday = 0;
 
-                //int h = 30;
 
                 //내일
                 final Date today = new Date();
@@ -689,10 +690,6 @@ public class weekactivity extends AppCompatActivity {
 
                 TimeZone jst = TimeZone.getTimeZone("JST");
                 final Calendar cal = Calendar.getInstance(jst); // 주어진 시간대에 맞게 현재 시각으로 초기화된 GregorianCalender 객체를 반환.// 또는 Calendar now = Calendar.getInstance(Locale.KOREA);
-                //System.out.println ( cal.get ( Calendar.YEAR ) + "년 " + ( cal.get ( Calendar.MONTH ) + 1 ) + "월 " + cal.get ( Calendar.DATE ) + "일 " + cal.get ( Calendar.HOUR_OF_DAY ) + "시 " +cal.get ( Calendar.MINUTE ) + "분 " + cal.get ( Calendar.SECOND ) + "초 " );
-
-
-                //final Calendar calendar = Calendar.getInstance(Locale.KOREAN);
 
                 //연,월,일을 따로 저장
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM/yyyy", Locale.KOREAN);
@@ -1273,12 +1270,39 @@ public class weekactivity extends AppCompatActivity {
                 final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
                 final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
 
-                //현재 날짜 텍스트뷰에 뿌려줌
+
+
+
                 tvDate_week.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
 
 
 
 
+                    //위의 textview 부분에서 날짜를 변경하는 부분.
+
+                /*
+                    ver--;
+                if ((cal.get(Calendar.MONTH) + ver) == 0) {
+                    //그 전년도로 이동
+                    ver = 0;
+                    year++;
+                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
+
+                }else if((cal.get(Calendar.YEAR) - year) != 2020) {
+                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
+                }else {
+
+                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + ver));
+                }
+
+
+
+                 */
+
+
+
+
+                // Integer.parseInt(curMonthFormat.format(date)) - 1    <= 오늘의 달
 
 
 
@@ -1289,6 +1313,23 @@ public class weekactivity extends AppCompatActivity {
 
                 mCal = Calendar.getInstance();
                 mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, Integer.parseInt(curDayFormat.format(date)) - 7);   //오늘날에서 7일전
+
+
+                /*
+
+                if (mCal.get(Calendar.MONTH) == Integer.parseInt(curMonthFormat.format(date)) - 1){ //이부분 틀린듯
+                    //textview 값 가져와서 비교해보자. 오늘 달이랑.
+                    //현재 날짜 텍스트뷰에 뿌려줌
+                    tvDate_week.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
+                }else { //현재 날짜가 아니라는 뜻
+                    lastmonth++;
+                    tvDate_week.setText(curYearFormat.format(date) + "/" + (mCal.get(Calendar.MONTH) - lastmonth));
+                }
+
+
+                 */
+
+
 
 
                 if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {  //일요일
