@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="약속 제목"/>
+
+    <!--약속 제목이 메인달력에 나오게-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dlgEdt1"
+        android:hint="약속 제목을 입력해주세요."/>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="시작 시간" />
+
+        <EditText
+            android:id="@+id/dlgEdt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="00시 의 형태로 숫자만 두 자리로 적어주세요." />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="시작 분" />
+
+            <EditText
+                android:id="@+id/dlgEdt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="00분 의 형태로 숫자만 두 자리로 적어주세요." />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="종료 시간" />
+
+            <EditText
+                android:id="@+id/dlgEdt4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="00시 의 형태로 숫자만 두 자리로 적어주세요." />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="종료 분" />
+
+            <EditText
+                android:id="@+id/dlgEdt5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="00분 의 형태로 숫자만 두 자리로 적어주세요." />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="장소"/>
+    <EditText
+        android:id="@+id/dlgEdt6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="장소를 입력해주세요."/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="메모"/>
+    <EditText
+        android:id="@+id/dlgEdt7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="메모를 입력해주세요."/>
+
+
+
+
+</LinearLayout>
