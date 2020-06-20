@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/baseLayout_week"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".weekactivity"
-    android:id="@+id/baseLayout_week">
+    tools:context=".weekactivity">
 
 
     <TextView
@@ -17,32 +17,35 @@
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:textColor="#000000"
-        android:textSize="20sp"
-        />
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <Button
             android:id="@+id/button1_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="보기방식"/>
+            android:text="보기방식" />
+
         <Button
             android:id="@+id/todaybutton_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="오늘"/>
+            android:text="오늘" />
+
         <Button
             android:id="@+id/last_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="저번주"/>
+            android:text="저번주" />
+
         <Button
             android:id="@+id/next_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="다음주"/>
+            android:text="다음주" />
 
 
     </LinearLayout>
@@ -55,81 +58,81 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="일"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="월"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="화"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="수"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="목"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="금"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
             android:text="토"
-            />
+            android:textColor="#000000"
+            android:textSize="20sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -139,101 +142,89 @@
             android:id="@+id/weekviews_1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/weekviews_2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/weekviews_3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/weekviews_4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/weekviews_5"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/weekviews_6"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/weekviews_7"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorAccent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            />
+            android:textSize="20sp" />
     </LinearLayout>
 
 
-
-
-
-
-
     <GridView
-        android:layout_marginTop="10dp"
         android:id="@+id/gridview_week"
-        android:layout_weight="1"
-        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:numColumns="7"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:listSelector="#58D6E6"
-        >
-    </GridView>
-
-
-
-
+        android:numColumns="7"></GridView>
 
 
     <ScrollView
@@ -248,137 +239,83 @@
             android:layout_height="wrap_content"
 
             android:orientation="vertical">
-            <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00시~02시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="02시~04시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="04시~06시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="06시~08시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="08시~10시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10시~12시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12시~14시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="14시~16시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="16시~18시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="18시~20시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20시~22시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="22시~24시"
-                />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="일정을 입력해주세요"
-                />
 
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00시~02시" />
 
+            <Button
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="02시~04시" />
 
+            <Button
+                android:id="@+id/btn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="04시~06시" />
 
+            <Button
+                android:id="@+id/btn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="06시~08시" />
+
+            <Button
+                android:id="@+id/btn5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08시~10시" />
+
+            <Button
+                android:id="@+id/btn6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10시~12시" />
+
+            <Button
+                android:id="@+id/btn7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12시~14시" />
+
+            <Button
+                android:id="@+id/btn8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14시~16시" />
+
+            <Button
+                android:id="@+id/btn9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16시~18시" />
+
+            <Button
+                android:id="@+id/btn10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="18시~20시" />
+
+            <Button
+                android:id="@+id/btn11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20시~22시" />
+
+            <Button
+                android:id="@+id/btn12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22시~24시" />
 
 
         </LinearLayout>
 
     </ScrollView>
-
-
 
 
 </LinearLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="약속 제목"/>
+
+    <!--약속 제목이 메인달력에 나오게-->
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dlgEdt1"
+        android:hint="약속 제목을 입력해주세요."/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="장소"/>
+    <EditText
+        android:id="@+id/dlgEdt6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="장소를 입력해주세요."/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="메모"/>
+    <EditText
+        android:id="@+id/dlgEdt7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="메모를 입력해주세요."/>
+
+
+
+
+</LinearLayout>

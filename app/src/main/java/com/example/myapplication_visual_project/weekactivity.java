@@ -1,11 +1,14 @@
 package com.example.myapplication_visual_project;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +25,10 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,6 +36,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import static java.security.AccessController.getContext;
 
 public class weekactivity extends AppCompatActivity {
 
@@ -51,6 +61,8 @@ public class weekactivity extends AppCompatActivity {
     int addday = 0;
     int addday2 = 0;
     int lastmonth = 0;
+
+    int week_num = 0;
 
     /**
      * 연/월 텍스트뷰
@@ -76,7 +88,35 @@ public class weekactivity extends AppCompatActivity {
      * 캘린더 변수
      */
     Calendar mCal;
-    Calendar mCal_today;
+    Calendar mCal_now;
+
+    int month_test = 1;
+
+
+
+
+    Button btn1;
+    Button btn2;
+    Button btn3;
+    Button btn4;
+    Button btn5;
+    Button btn6;
+    Button btn7;
+    Button btn8;
+    Button btn9;
+    Button btn10;
+    Button btn11;
+    Button btn12;
+
+
+
+
+
+    View dialogView, toastView;
+
+
+    String file_month;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +144,112 @@ public class weekactivity extends AppCompatActivity {
         weekviews_5 = (TextView) findViewById(R.id.weekviews_5);
         weekviews_6 = (TextView) findViewById(R.id.weekviews_6);
         weekviews_7 = (TextView) findViewById(R.id.weekviews_7);
+
+
+
+        btn1 = (Button) findViewById(R.id.btn1);
+        btn2 = (Button) findViewById(R.id.btn2);
+        btn3 = (Button) findViewById(R.id.btn3);
+        btn4 = (Button) findViewById(R.id.btn4);
+        btn5 = (Button) findViewById(R.id.btn5);
+        btn6 = (Button) findViewById(R.id.btn6);
+        btn7 = (Button) findViewById(R.id.btn7);
+        btn8 = (Button) findViewById(R.id.btn8);
+        btn9 = (Button) findViewById(R.id.btn9);
+        btn10 = (Button) findViewById(R.id.btn10);
+        btn11 = (Button) findViewById(R.id.btn11);
+        btn12 = (Button) findViewById(R.id.btn12);
+
+
+
+
+
+        // get Current Week of the year
+        Calendar calendar = Calendar.getInstance();
+        Log.v("Current Week", String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR)));
+        int current_week=calendar.get(Calendar.WEEK_OF_YEAR);
+        int week_start_day=calendar.getFirstDayOfWeek(); // this will get the starting day os week in integer format i-e 1 if monday
+        //Toast.makeText(getContext(),"Current Week is"+current_week +"Start Day is"+week_start_day,Toast.LENGTH_SHORT).show();
+
+
+        // get the starting and ending date
+        // Set the calendar to sunday of the current week
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+        System.out.println("Current week = " + Calendar.DAY_OF_WEEK);
+
+        // Print dates of the current week starting on Sunday
+        DateFormat df = new SimpleDateFormat("d", Locale.getDefault());
+        String startDate = "", midDate_1 = "", midDate_2 = "", midDate_3 = "", midDate_4 = "", midDate_5 = "", endDate = "";
+
+        startDate = df.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, 1);
+        midDate_1 = df.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, 1);
+        midDate_2 = df.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, 1);
+        midDate_3 = df.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, 1);
+        midDate_4 = df.format(calendar.getTime());
+
+        calendar.add(Calendar.DATE, 1);
+        midDate_5 = df.format(calendar.getTime());
+
+
+        calendar.add(Calendar.DATE, 1);
+        endDate = df.format(calendar.getTime());
+
+        weekviews_1.setText(startDate);
+        weekviews_2.setText(midDate_1);
+        weekviews_3.setText(midDate_2);
+        weekviews_4.setText(midDate_3);
+        weekviews_5.setText(midDate_4);
+        weekviews_6.setText(midDate_5);
+        weekviews_7.setText(endDate);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // 오늘에 날짜를 세팅 해준다.
@@ -141,547 +287,73 @@ public class weekactivity extends AppCompatActivity {
 
 
 
-
-
-        //gridview 요일 표시
-        dayList = new ArrayList<String>();
-        dayList.add("일");
-        dayList.add("월");
-        dayList.add("화");
-        dayList.add("수");
-        dayList.add("목");
-        dayList.add("금");
-        dayList.add("토");
-
-
-
-
-        mCal = Calendar.getInstance();
-        //이번달 1일 무슨요일인지 판단 mCal.set(Year,Month,Day)
-        mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, 1);
-        final int dayNum = mCal.get(Calendar.DAY_OF_WEEK);
-        //1일 - 요일 매칭 시키기 위해 공백 add
-        for (int i = 1; i < dayNum; i++) {
-            dayList.add("");
-        }
-        setCalendarDate(mCal.get(Calendar.MONTH) + 1);
-
-        gridAdapter = new weekactivity.GridAdapter(getApplicationContext(), dayList);
-        gridView_week.setAdapter(gridAdapter);
-
-
-
-
-
-
-
-        //각 주마다 요일 배치하기.
-
-        mCal_today = Calendar.getInstance();
-        mCal_today.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, Integer.parseInt(curDayFormat.format(date)));
-
-
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {  //일요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1": case "2": case "3": case "4": case "5": case "6": case "7"://1일이면
-
-
-                        weekviews_1.setText(weekview_nuber[0]);
-                        weekviews_2.setText(weekview_nuber[1]);
-                        weekviews_3.setText(weekview_nuber[2]);
-                        weekviews_4.setText(weekview_nuber[3]);
-                        weekviews_5.setText(weekview_nuber[4]);
-                        weekviews_6.setText(weekview_nuber[5]);
-                        weekviews_7.setText(weekview_nuber[6]);
-
-                    break;
-                case "8": case "9": case "10": case "11": case "12": case "13": case "14"://1일이면
-
-                        weekviews_1.setText(weekview_nuber[7]);
-                        weekviews_2.setText(weekview_nuber[8]);
-                        weekviews_3.setText(weekview_nuber[9]);
-                        weekviews_4.setText(weekview_nuber[10]);
-                        weekviews_5.setText(weekview_nuber[11]);
-                        weekviews_6.setText(weekview_nuber[12]);
-                        weekviews_7.setText(weekview_nuber[13]);
-
-                    break;
-                case "15": case "16": case "17": case "18": case "19": case "20": case "21":   //2일이면
-                 //15~21
-                        weekviews_1.setText(weekview_nuber[14]);
-                        weekviews_2.setText(weekview_nuber[15]);
-                        weekviews_3.setText(weekview_nuber[16]);
-                        weekviews_4.setText(weekview_nuber[17]);
-                        weekviews_5.setText(weekview_nuber[18]);
-                        weekviews_6.setText(weekview_nuber[19]);
-                        weekviews_7.setText(weekview_nuber[20]);
-
-                    break;
-                case "22": case "23": case "24": case "25": case "26": case "27": case "28":    //3일이면
-              //22~28
-                        weekviews_1.setText(weekview_nuber[21]);
-                        weekviews_2.setText(weekview_nuber[22]);
-                        weekviews_3.setText(weekview_nuber[23]);
-                        weekviews_4.setText(weekview_nuber[24]);
-                        weekviews_5.setText(weekview_nuber[25]);
-                        weekviews_6.setText(weekview_nuber[26]);
-                        weekviews_7.setText(weekview_nuber[27]);
-
-                    break;
-                case "29": case "30": case "31":   //4일이면
-            //29~31
-                        weekviews_1.setText(weekview_nuber[28]);
-                        weekviews_2.setText(weekview_nuber[29]);
-                        weekviews_3.setText(weekview_nuber[30]);
-                        weekviews_4.setText(weekview_nuber[31]);
-                        weekviews_5.setText(weekview_nuber[31]);
-                        weekviews_6.setText(weekview_nuber[31]);
-                        weekviews_7.setText(weekview_nuber[31]);
-
-
-                    break;
-
-            }
-        }
-
-
-        ///////
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {  //월요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1": case "2": case "3": case "4": case "5": case "6": //1일이면
-
-
-                    //1~6
-                        weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                        weekviews_2.setText(weekview_nuber[0]);
-                        weekviews_3.setText(weekview_nuber[1]);
-                        weekviews_4.setText(weekview_nuber[2]);
-                        weekviews_5.setText(weekview_nuber[3]);
-                        weekviews_6.setText(weekview_nuber[4]);
-                        weekviews_7.setText(weekview_nuber[5]);
-
-                    break;
-                case "7": case "8": case "9": case "10": case "11": case "12": case "13": //1일이면
-   //7~13
-                        weekviews_1.setText(weekview_nuber[6]);
-                        weekviews_2.setText(weekview_nuber[7]);
-                        weekviews_3.setText(weekview_nuber[8]);
-                        weekviews_4.setText(weekview_nuber[9]);
-                        weekviews_5.setText(weekview_nuber[10]);
-                        weekviews_6.setText(weekview_nuber[11]);
-                        weekviews_7.setText(weekview_nuber[12]);
-
-                    break;
-                case "14": case "15": case "16": case "17": case "18": case "19": case "20":   //2일이면
-                     //14~20
-                        weekviews_1.setText(weekview_nuber[13]);
-                        weekviews_2.setText(weekview_nuber[14]);
-                        weekviews_3.setText(weekview_nuber[15]);
-                        weekviews_4.setText(weekview_nuber[16]);
-                        weekviews_5.setText(weekview_nuber[17]);
-                        weekviews_6.setText(weekview_nuber[18]);
-                        weekviews_7.setText(weekview_nuber[19]);
-
-                    break;
-                case "21": case "22": case "23": case "24": case "25": case "26": case "27":     //3일이면
-                      //21~27
-                        weekviews_1.setText(weekview_nuber[20]);
-                        weekviews_2.setText(weekview_nuber[21]);
-                        weekviews_3.setText(weekview_nuber[22]);
-                        weekviews_4.setText(weekview_nuber[23]);
-                        weekviews_5.setText(weekview_nuber[24]);
-                        weekviews_6.setText(weekview_nuber[25]);
-                        weekviews_7.setText(weekview_nuber[26]);
-
-                    break;
-                case "28": case "29": case "30": case "31":   //4일이면
-                    //28~31
-                        weekviews_1.setText(weekview_nuber[27]);
-                        weekviews_2.setText(weekview_nuber[28]);
-                        weekviews_3.setText(weekview_nuber[29]);
-                        weekviews_4.setText(weekview_nuber[30]);
-                        weekviews_5.setText(weekview_nuber[31]);
-                        weekviews_6.setText(weekview_nuber[31]);
-                        weekviews_7.setText(weekview_nuber[31]);
-
-                    break;
-
-            }
-        }
-
-
-        ///////
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {  //화요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1": case "2": case "3": case "4":   //1일이면
-
-
-                    //1~5
-                    weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                    weekviews_2.setText(weekview_nuber[31]);
-                    weekviews_3.setText(weekview_nuber[0]);
-                    weekviews_4.setText(weekview_nuber[1]);
-                    weekviews_5.setText(weekview_nuber[2]);
-                    weekviews_6.setText(weekview_nuber[3]);
-                    weekviews_7.setText(weekview_nuber[4]);
-
-                    break;
-                case "5": case "6": case "7": case "8": case "9": case "10": case "11":   //1일이면
-                    //6~12
-                    weekviews_1.setText(weekview_nuber[5]);
-                    weekviews_2.setText(weekview_nuber[6]);
-                    weekviews_3.setText(weekview_nuber[7]);
-                    weekviews_4.setText(weekview_nuber[8]);
-                    weekviews_5.setText(weekview_nuber[9]);
-                    weekviews_6.setText(weekview_nuber[10]);
-                    weekviews_7.setText(weekview_nuber[11]);
-
-                    break;
-                case "12": case "13": case "14": case "15": case "16": case "17": case "18":     //2일이면
-                    //13~19
-                    weekviews_1.setText(weekview_nuber[12]);
-                    weekviews_2.setText(weekview_nuber[13]);
-                    weekviews_3.setText(weekview_nuber[14]);
-                    weekviews_4.setText(weekview_nuber[15]);
-                    weekviews_5.setText(weekview_nuber[16]);
-                    weekviews_6.setText(weekview_nuber[17]);
-                    weekviews_7.setText(weekview_nuber[18]);
-
-                    break;
-                case "19": case "20": case "21": case "22": case "23": case "24": case "25":       //3일이면
-                    //20~26
-                    weekviews_1.setText(weekview_nuber[19]);
-                    weekviews_2.setText(weekview_nuber[20]);
-                    weekviews_3.setText(weekview_nuber[21]);
-                    weekviews_4.setText(weekview_nuber[22]);
-                    weekviews_5.setText(weekview_nuber[23]);
-                    weekviews_6.setText(weekview_nuber[24]);
-                    weekviews_7.setText(weekview_nuber[25]);
-
-                    break;
-                case "26": case "27": case "28": case "29": case "30": case "31":   //4일이면
-                    //27~31
-                    weekviews_1.setText(weekview_nuber[26]);
-                    weekviews_2.setText(weekview_nuber[27]);
-                    weekviews_3.setText(weekview_nuber[28]);
-                    weekviews_4.setText(weekview_nuber[29]);
-                    weekviews_5.setText(weekview_nuber[30]);
-                    weekviews_6.setText(weekview_nuber[31]);
-                    weekviews_7.setText(weekview_nuber[31]);
-
-                    break;
-
-            }
-        }
-
-
-
-        ///////
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {  //수요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1": case "2": case "3": case "4":   //1일이면
-
-
-                    //1~4
-                    weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                    weekviews_2.setText(weekview_nuber[31]);
-                    weekviews_3.setText(weekview_nuber[31]);
-                    weekviews_4.setText(weekview_nuber[0]);
-                    weekviews_5.setText(weekview_nuber[1]);
-                    weekviews_6.setText(weekview_nuber[2]);
-                    weekviews_7.setText(weekview_nuber[3]);
-
-                    break;
-                case "5": case "6": case "7": case "8": case "9": case "10": case "11":   //1일이면
-                    //5~11
-                    weekviews_1.setText(weekview_nuber[4]);
-                    weekviews_2.setText(weekview_nuber[5]);
-                    weekviews_3.setText(weekview_nuber[6]);
-                    weekviews_4.setText(weekview_nuber[7]);
-                    weekviews_5.setText(weekview_nuber[8]);
-                    weekviews_6.setText(weekview_nuber[9]);
-                    weekviews_7.setText(weekview_nuber[10]);
-
-                    break;
-                case "12": case "13": case "14": case "15": case "16": case "17": case "18":     //2일이면
-                    //12~18
-                    weekviews_1.setText(weekview_nuber[11]);
-                    weekviews_2.setText(weekview_nuber[12]);
-                    weekviews_3.setText(weekview_nuber[13]);
-                    weekviews_4.setText(weekview_nuber[14]);
-                    weekviews_5.setText(weekview_nuber[15]);
-                    weekviews_6.setText(weekview_nuber[16]);
-                    weekviews_7.setText(weekview_nuber[17]);
-
-                    break;
-                case "19": case "20": case "21": case "22": case "23": case "24": case "25":       //3일이면
-                    //19~25
-                    weekviews_1.setText(weekview_nuber[18]);
-                    weekviews_2.setText(weekview_nuber[29]);
-                    weekviews_3.setText(weekview_nuber[20]);
-                    weekviews_4.setText(weekview_nuber[21]);
-                    weekviews_5.setText(weekview_nuber[22]);
-                    weekviews_6.setText(weekview_nuber[23]);
-                    weekviews_7.setText(weekview_nuber[24]);
-
-                    break;
-                case "26": case "27": case "28": case "29": case "30": case "31":   //4일이면
-                    //26~31
-                    weekviews_1.setText(weekview_nuber[25]);
-                    weekviews_2.setText(weekview_nuber[26]);
-                    weekviews_3.setText(weekview_nuber[27]);
-                    weekviews_4.setText(weekview_nuber[28]);
-                    weekviews_5.setText(weekview_nuber[29]);
-                    weekviews_6.setText(weekview_nuber[30]);
-                    weekviews_7.setText(weekview_nuber[31]);
-
-                    break;
-
-            }
-        }
-
-
-
-        ///////
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {  //목요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1": case "2": case "3":   //1일이면
-
-
-                    //1~3
-                    weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                    weekviews_2.setText(weekview_nuber[31]);
-                    weekviews_3.setText(weekview_nuber[31]);
-                    weekviews_4.setText(weekview_nuber[31]);
-                    weekviews_5.setText(weekview_nuber[0]);
-                    weekviews_6.setText(weekview_nuber[1]);
-                    weekviews_7.setText(weekview_nuber[2]);
-
-                    break;
-                case "4": case "5":case "6": case "7": case "8": case "9": case "10":   //1일이면
-                    //4~10
-                    weekviews_1.setText(weekview_nuber[3]);
-                    weekviews_2.setText(weekview_nuber[4]);
-                    weekviews_3.setText(weekview_nuber[5]);
-                    weekviews_4.setText(weekview_nuber[6]);
-                    weekviews_5.setText(weekview_nuber[7]);
-                    weekviews_6.setText(weekview_nuber[8]);
-                    weekviews_7.setText(weekview_nuber[9]);
-
-                    break;
-                case "11": case "12": case "13": case "14": case "15": case "16": case "17":     //2일이면
-                    //11~17
-                    weekviews_1.setText(weekview_nuber[10]);
-                    weekviews_2.setText(weekview_nuber[11]);
-                    weekviews_3.setText(weekview_nuber[12]);
-                    weekviews_4.setText(weekview_nuber[13]);
-                    weekviews_5.setText(weekview_nuber[14]);
-                    weekviews_6.setText(weekview_nuber[15]);
-                    weekviews_7.setText(weekview_nuber[16]);
-
-                    break;
-                case "18": case "19": case "20": case "21": case "22": case "23": case "24":       //3일이면
-                    //18~24
-                    weekviews_1.setText(weekview_nuber[17]);
-                    weekviews_2.setText(weekview_nuber[18]);
-                    weekviews_3.setText(weekview_nuber[19]);
-                    weekviews_4.setText(weekview_nuber[20]);
-                    weekviews_5.setText(weekview_nuber[21]);
-                    weekviews_6.setText(weekview_nuber[22]);
-                    weekviews_7.setText(weekview_nuber[23]);
-
-                    break;
-                case "25": case "26": case "27": case "28": case "29": case "30": case "31":   //4일이면
-                    //25~31
-                    weekviews_1.setText(weekview_nuber[24]);
-                    weekviews_2.setText(weekview_nuber[25]);
-                    weekviews_3.setText(weekview_nuber[26]);
-                    weekviews_4.setText(weekview_nuber[27]);
-                    weekviews_5.setText(weekview_nuber[28]);
-                    weekviews_6.setText(weekview_nuber[29]);
-                    weekviews_7.setText(weekview_nuber[30]);
-
-                    break;
-
-            }
-        }
-
-
-
-        ///////
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {  //금요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1": case "2":   //1일이면
-
-
-                    //1~2
-                    weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                    weekviews_2.setText(weekview_nuber[31]);
-                    weekviews_3.setText(weekview_nuber[31]);
-                    weekviews_4.setText(weekview_nuber[31]);
-                    weekviews_5.setText(weekview_nuber[31]);
-                    weekviews_6.setText(weekview_nuber[0]);
-                    weekviews_7.setText(weekview_nuber[1]);
-
-                    break;
-                case "3": case "4": case "5": case "6": case "7": case "8": case "9":   //1일이면
-                    //4~10
-                    weekviews_1.setText(weekview_nuber[2]);
-                    weekviews_2.setText(weekview_nuber[3]);
-                    weekviews_3.setText(weekview_nuber[4]);
-                    weekviews_4.setText(weekview_nuber[5]);
-                    weekviews_5.setText(weekview_nuber[6]);
-                    weekviews_6.setText(weekview_nuber[7]);
-                    weekviews_7.setText(weekview_nuber[8]);
-
-                    break;
-                case "10": case "11": case "12": case "13": case "14": case "15": case "16":     //2일이면
-                    //11~17
-                    weekviews_1.setText(weekview_nuber[9]);
-                    weekviews_2.setText(weekview_nuber[10]);
-                    weekviews_3.setText(weekview_nuber[11]);
-                    weekviews_4.setText(weekview_nuber[12]);
-                    weekviews_5.setText(weekview_nuber[13]);
-                    weekviews_6.setText(weekview_nuber[14]);
-                    weekviews_7.setText(weekview_nuber[15]);
-
-                    break;
-                case "17": case "18": case "19": case "20": case "21": case "22": case "23":       //3일이면
-                    //18~24
-                    weekviews_1.setText(weekview_nuber[16]);
-                    weekviews_2.setText(weekview_nuber[17]);
-                    weekviews_3.setText(weekview_nuber[18]);
-                    weekviews_4.setText(weekview_nuber[19]);
-                    weekviews_5.setText(weekview_nuber[20]);
-                    weekviews_6.setText(weekview_nuber[21]);
-                    weekviews_7.setText(weekview_nuber[22]);
-
-                    break;
-                case "24": case "25": case "26": case "27": case "28": case "29": case "30":    //4일이면
-                    //25~31
-                    weekviews_1.setText(weekview_nuber[23]);
-                    weekviews_2.setText(weekview_nuber[24]);
-                    weekviews_3.setText(weekview_nuber[25]);
-                    weekviews_4.setText(weekview_nuber[26]);
-                    weekviews_5.setText(weekview_nuber[27]);
-                    weekviews_6.setText(weekview_nuber[28]);
-                    weekviews_7.setText(weekview_nuber[29]);
-
-                    break;
-
-                case "31":
-                    weekviews_1.setText(weekview_nuber[30]);
-                    weekviews_2.setText(weekview_nuber[31]);
-                    weekviews_3.setText(weekview_nuber[31]);
-                    weekviews_4.setText(weekview_nuber[31]);
-                    weekviews_5.setText(weekview_nuber[31]);
-                    weekviews_6.setText(weekview_nuber[31]);
-                    weekviews_7.setText(weekview_nuber[31]);
-
-                    break;
-
-            }
-        }
-
-
-        ///////
-        if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {  //토요일
-            switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                case "1":    //1일이면
-
-
-                    //1~2
-                    weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                    weekviews_2.setText(weekview_nuber[31]);
-                    weekviews_3.setText(weekview_nuber[31]);
-                    weekviews_4.setText(weekview_nuber[31]);
-                    weekviews_5.setText(weekview_nuber[31]);
-                    weekviews_6.setText(weekview_nuber[31]);
-                    weekviews_7.setText(weekview_nuber[0]);
-
-                    break;
-                case "2": case "3": case "4": case "5": case "6": case "7": case "8":    //1일이면
-                    //4~10
-                    weekviews_1.setText(weekview_nuber[1]);
-                    weekviews_2.setText(weekview_nuber[2]);
-                    weekviews_3.setText(weekview_nuber[3]);
-                    weekviews_4.setText(weekview_nuber[4]);
-                    weekviews_5.setText(weekview_nuber[5]);
-                    weekviews_6.setText(weekview_nuber[6]);
-                    weekviews_7.setText(weekview_nuber[7]);
-
-                    break;
-                case "9": case "10": case "11": case "12": case "13": case "14": case "15":      //2일이면
-                    //11~17
-                    weekviews_1.setText(weekview_nuber[8]);
-                    weekviews_2.setText(weekview_nuber[9]);
-                    weekviews_3.setText(weekview_nuber[10]);
-                    weekviews_4.setText(weekview_nuber[11]);
-                    weekviews_5.setText(weekview_nuber[12]);
-                    weekviews_6.setText(weekview_nuber[13]);
-                    weekviews_7.setText(weekview_nuber[14]);
-
-                    break;
-                case "16": case "17": case "18": case "19": case "20": case "21": case "22":        //3일이면
-                    //18~24
-                    weekviews_1.setText(weekview_nuber[15]);
-                    weekviews_2.setText(weekview_nuber[16]);
-                    weekviews_3.setText(weekview_nuber[17]);
-                    weekviews_4.setText(weekview_nuber[18]);
-                    weekviews_5.setText(weekview_nuber[19]);
-                    weekviews_6.setText(weekview_nuber[20]);
-                    weekviews_7.setText(weekview_nuber[21]);
-
-                    break;
-                case "23": case "24": case "25": case "26": case "27": case "28": case "29":     //4일이면
-                    //25~31
-                    weekviews_1.setText(weekview_nuber[22]);
-                    weekviews_2.setText(weekview_nuber[23]);
-                    weekviews_3.setText(weekview_nuber[24]);
-                    weekviews_4.setText(weekview_nuber[25]);
-                    weekviews_5.setText(weekview_nuber[26]);
-                    weekviews_6.setText(weekview_nuber[27]);
-                    weekviews_7.setText(weekview_nuber[28]);
-
-                    break;
-
-                case "30": case "31":
-                    weekviews_1.setText(weekview_nuber[29]);
-                    weekviews_2.setText(weekview_nuber[30]);
-                    weekviews_3.setText(weekview_nuber[31]);
-                    weekviews_4.setText(weekview_nuber[31]);
-                    weekviews_5.setText(weekview_nuber[31]);
-                    weekviews_6.setText(weekview_nuber[31]);
-                    weekviews_7.setText(weekview_nuber[31]);
-
-                    break;
-
-            }
-        }
-
-
-
-
-
-
-
-
         ///////////////////////////////////////////////////////////////////////////
         //오늘로 이동
         todaybutton_week.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                week_num = 0;
 
-                //초기화
-                tvDate_week.setText("");
+
+                // get Current Week of the year
+                Calendar calendar = Calendar.getInstance();
+                Log.v("Current Week", String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR)));
+                int current_week=calendar.get(Calendar.WEEK_OF_YEAR);
+                int week_start_day=calendar.getFirstDayOfWeek(); // this will get the starting day os week in integer format i-e 1 if monday
+                //Toast.makeText(getContext(),"Current Week is"+current_week +"Start Day is"+week_start_day,Toast.LENGTH_SHORT).show();
+
+
+                // get the starting and ending date
+                // Set the calendar to sunday of the current week
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                //System.out.println("Current week = " + Calendar.DAY_OF_WEEK);
+
+                // Print dates of the current week starting on Sunday
+                DateFormat df = new SimpleDateFormat("d", Locale.getDefault());
+                String startDate = "", midDate_1 = "", midDate_2 = "", midDate_3 = "", midDate_4 = "", midDate_5 = "", endDate = "";
+
+                startDate = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);
+                midDate_1 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);
+                midDate_2 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);
+                midDate_3 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);
+                midDate_4 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);
+                midDate_5 = df.format(calendar.getTime());
+
+
+                calendar.add(Calendar.DATE, 1);
+                endDate = df.format(calendar.getTime());
+
+                weekviews_1.setText(startDate);
+                weekviews_2.setText(midDate_1);
+                weekviews_3.setText(midDate_2);
+                weekviews_4.setText(midDate_3);
+                weekviews_5.setText(midDate_4);
+                weekviews_6.setText(midDate_5);
+                weekviews_7.setText(endDate);
+
+
+
+
+
+                month_test = 1;
 
                 // 오늘에 날짜를 세팅 해준다.
                 long now = System.currentTimeMillis();
                 final Date date = new Date(now);
 
-                addday = 0;
 
+                //int h = 30;
 
                 //내일
                 final Date today = new Date();
@@ -690,6 +362,10 @@ public class weekactivity extends AppCompatActivity {
 
                 TimeZone jst = TimeZone.getTimeZone("JST");
                 final Calendar cal = Calendar.getInstance(jst); // 주어진 시간대에 맞게 현재 시각으로 초기화된 GregorianCalender 객체를 반환.// 또는 Calendar now = Calendar.getInstance(Locale.KOREA);
+                //System.out.println ( cal.get ( Calendar.YEAR ) + "년 " + ( cal.get ( Calendar.MONTH ) + 1 ) + "월 " + cal.get ( Calendar.DATE ) + "일 " + cal.get ( Calendar.HOUR_OF_DAY ) + "시 " +cal.get ( Calendar.MINUTE ) + "분 " + cal.get ( Calendar.SECOND ) + "초 " );
+
+
+                //final Calendar calendar = Calendar.getInstance(Locale.KOREAN);
 
                 //연,월,일을 따로 저장
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM/yyyy", Locale.KOREAN);
@@ -708,1118 +384,108 @@ public class weekactivity extends AppCompatActivity {
 
 
 
-                //gridview 요일 표시
-                dayList = new ArrayList<String>();
-                dayList.add("일");
-                dayList.add("월");
-                dayList.add("화");
-                dayList.add("수");
-                dayList.add("목");
-                dayList.add("금");
-                dayList.add("토");
-
-
-
-
-                mCal = Calendar.getInstance();
-                //이번달 1일 무슨요일인지 판단 mCal.set(Year,Month,Day)
-                mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, 1);
-                final int dayNum = mCal.get(Calendar.DAY_OF_WEEK);
-                //1일 - 요일 매칭 시키기 위해 공백 add
-                for (int i = 1; i < dayNum; i++) {
-                    dayList.add("");
-                }
-                setCalendarDate(mCal.get(Calendar.MONTH) + 1);
-
-                gridAdapter = new weekactivity.GridAdapter(getApplicationContext(), dayList);
-                gridView_week.setAdapter(gridAdapter);
-
-
-
-
-
-
-
-                //각 주마다 요일 배치하기.
-
-                mCal_today = Calendar.getInstance();
-                mCal_today.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, Integer.parseInt(curDayFormat.format(date)));
-
-
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {  //일요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1": case "2": case "3": case "4": case "5": case "6": case "7"://1일이면
-
-
-                            weekviews_1.setText(weekview_nuber[0]);
-                            weekviews_2.setText(weekview_nuber[1]);
-                            weekviews_3.setText(weekview_nuber[2]);
-                            weekviews_4.setText(weekview_nuber[3]);
-                            weekviews_5.setText(weekview_nuber[4]);
-                            weekviews_6.setText(weekview_nuber[5]);
-                            weekviews_7.setText(weekview_nuber[6]);
-
-                            break;
-                        case "8": case "9": case "10": case "11": case "12": case "13": case "14"://1일이면
-
-                            weekviews_1.setText(weekview_nuber[7]);
-                            weekviews_2.setText(weekview_nuber[8]);
-                            weekviews_3.setText(weekview_nuber[9]);
-                            weekviews_4.setText(weekview_nuber[10]);
-                            weekviews_5.setText(weekview_nuber[11]);
-                            weekviews_6.setText(weekview_nuber[12]);
-                            weekviews_7.setText(weekview_nuber[13]);
-
-                            break;
-                        case "15": case "16": case "17": case "18": case "19": case "20": case "21":   //2일이면
-                            //15~21
-                            weekviews_1.setText(weekview_nuber[14]);
-                            weekviews_2.setText(weekview_nuber[15]);
-                            weekviews_3.setText(weekview_nuber[16]);
-                            weekviews_4.setText(weekview_nuber[17]);
-                            weekviews_5.setText(weekview_nuber[18]);
-                            weekviews_6.setText(weekview_nuber[19]);
-                            weekviews_7.setText(weekview_nuber[20]);
-
-                            break;
-                        case "22": case "23": case "24": case "25": case "26": case "27": case "28":    //3일이면
-                            //22~28
-                            weekviews_1.setText(weekview_nuber[21]);
-                            weekviews_2.setText(weekview_nuber[22]);
-                            weekviews_3.setText(weekview_nuber[23]);
-                            weekviews_4.setText(weekview_nuber[24]);
-                            weekviews_5.setText(weekview_nuber[25]);
-                            weekviews_6.setText(weekview_nuber[26]);
-                            weekviews_7.setText(weekview_nuber[27]);
-
-                            break;
-                        case "29": case "30": case "31":   //4일이면
-                            //29~31
-                            weekviews_1.setText(weekview_nuber[28]);
-                            weekviews_2.setText(weekview_nuber[29]);
-                            weekviews_3.setText(weekview_nuber[30]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {  //월요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1": case "2": case "3": case "4": case "5": case "6": //1일이면
-
-
-                            //1~6
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[0]);
-                            weekviews_3.setText(weekview_nuber[1]);
-                            weekviews_4.setText(weekview_nuber[2]);
-                            weekviews_5.setText(weekview_nuber[3]);
-                            weekviews_6.setText(weekview_nuber[4]);
-                            weekviews_7.setText(weekview_nuber[5]);
-
-                            break;
-                        case "7": case "8": case "9": case "10": case "11": case "12": case "13": //1일이면
-                            //7~13
-                            weekviews_1.setText(weekview_nuber[6]);
-                            weekviews_2.setText(weekview_nuber[7]);
-                            weekviews_3.setText(weekview_nuber[8]);
-                            weekviews_4.setText(weekview_nuber[9]);
-                            weekviews_5.setText(weekview_nuber[10]);
-                            weekviews_6.setText(weekview_nuber[11]);
-                            weekviews_7.setText(weekview_nuber[12]);
-
-                            break;
-                        case "14": case "15": case "16": case "17": case "18": case "19": case "20":   //2일이면
-                            //14~20
-                            weekviews_1.setText(weekview_nuber[13]);
-                            weekviews_2.setText(weekview_nuber[14]);
-                            weekviews_3.setText(weekview_nuber[15]);
-                            weekviews_4.setText(weekview_nuber[16]);
-                            weekviews_5.setText(weekview_nuber[17]);
-                            weekviews_6.setText(weekview_nuber[18]);
-                            weekviews_7.setText(weekview_nuber[19]);
-
-                            break;
-                        case "21": case "22": case "23": case "24": case "25": case "26": case "27":     //3일이면
-                            //21~27
-                            weekviews_1.setText(weekview_nuber[20]);
-                            weekviews_2.setText(weekview_nuber[21]);
-                            weekviews_3.setText(weekview_nuber[22]);
-                            weekviews_4.setText(weekview_nuber[23]);
-                            weekviews_5.setText(weekview_nuber[24]);
-                            weekviews_6.setText(weekview_nuber[25]);
-                            weekviews_7.setText(weekview_nuber[26]);
-
-                            break;
-                        case "28": case "29": case "30": case "31":   //4일이면
-                            //28~31
-                            weekviews_1.setText(weekview_nuber[27]);
-                            weekviews_2.setText(weekview_nuber[28]);
-                            weekviews_3.setText(weekview_nuber[29]);
-                            weekviews_4.setText(weekview_nuber[30]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {  //화요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1": case "2": case "3": case "4":   //1일이면
-
-
-                            //1~5
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[0]);
-                            weekviews_4.setText(weekview_nuber[1]);
-                            weekviews_5.setText(weekview_nuber[2]);
-                            weekviews_6.setText(weekview_nuber[3]);
-                            weekviews_7.setText(weekview_nuber[4]);
-
-                            break;
-                        case "5": case "6": case "7": case "8": case "9": case "10": case "11":   //1일이면
-                            //6~12
-                            weekviews_1.setText(weekview_nuber[5]);
-                            weekviews_2.setText(weekview_nuber[6]);
-                            weekviews_3.setText(weekview_nuber[7]);
-                            weekviews_4.setText(weekview_nuber[8]);
-                            weekviews_5.setText(weekview_nuber[9]);
-                            weekviews_6.setText(weekview_nuber[10]);
-                            weekviews_7.setText(weekview_nuber[11]);
-
-                            break;
-                        case "12": case "13": case "14": case "15": case "16": case "17": case "18":     //2일이면
-                            //13~19
-                            weekviews_1.setText(weekview_nuber[12]);
-                            weekviews_2.setText(weekview_nuber[13]);
-                            weekviews_3.setText(weekview_nuber[14]);
-                            weekviews_4.setText(weekview_nuber[15]);
-                            weekviews_5.setText(weekview_nuber[16]);
-                            weekviews_6.setText(weekview_nuber[17]);
-                            weekviews_7.setText(weekview_nuber[18]);
-
-                            break;
-                        case "19": case "20": case "21": case "22": case "23": case "24": case "25":       //3일이면
-                            //20~26
-                            weekviews_1.setText(weekview_nuber[19]);
-                            weekviews_2.setText(weekview_nuber[20]);
-                            weekviews_3.setText(weekview_nuber[21]);
-                            weekviews_4.setText(weekview_nuber[22]);
-                            weekviews_5.setText(weekview_nuber[23]);
-                            weekviews_6.setText(weekview_nuber[24]);
-                            weekviews_7.setText(weekview_nuber[25]);
-
-                            break;
-                        case "26": case "27": case "28": case "29": case "30": case "31":   //4일이면
-                            //27~31
-                            weekviews_1.setText(weekview_nuber[26]);
-                            weekviews_2.setText(weekview_nuber[27]);
-                            weekviews_3.setText(weekview_nuber[28]);
-                            weekviews_4.setText(weekview_nuber[29]);
-                            weekviews_5.setText(weekview_nuber[30]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {  //수요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1": case "2": case "3": case "4":   //1일이면
-
-
-                            //1~4
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[0]);
-                            weekviews_5.setText(weekview_nuber[1]);
-                            weekviews_6.setText(weekview_nuber[2]);
-                            weekviews_7.setText(weekview_nuber[3]);
-
-                            break;
-                        case "5": case "6": case "7": case "8": case "9": case "10": case "11":   //1일이면
-                            //5~11
-                            weekviews_1.setText(weekview_nuber[4]);
-                            weekviews_2.setText(weekview_nuber[5]);
-                            weekviews_3.setText(weekview_nuber[6]);
-                            weekviews_4.setText(weekview_nuber[7]);
-                            weekviews_5.setText(weekview_nuber[8]);
-                            weekviews_6.setText(weekview_nuber[9]);
-                            weekviews_7.setText(weekview_nuber[10]);
-
-                            break;
-                        case "12": case "13": case "14": case "15": case "16": case "17": case "18":     //2일이면
-                            //12~18
-                            weekviews_1.setText(weekview_nuber[11]);
-                            weekviews_2.setText(weekview_nuber[12]);
-                            weekviews_3.setText(weekview_nuber[13]);
-                            weekviews_4.setText(weekview_nuber[14]);
-                            weekviews_5.setText(weekview_nuber[15]);
-                            weekviews_6.setText(weekview_nuber[16]);
-                            weekviews_7.setText(weekview_nuber[17]);
-
-                            break;
-                        case "19": case "20": case "21": case "22": case "23": case "24": case "25":       //3일이면
-                            //19~25
-                            weekviews_1.setText(weekview_nuber[18]);
-                            weekviews_2.setText(weekview_nuber[29]);
-                            weekviews_3.setText(weekview_nuber[20]);
-                            weekviews_4.setText(weekview_nuber[21]);
-                            weekviews_5.setText(weekview_nuber[22]);
-                            weekviews_6.setText(weekview_nuber[23]);
-                            weekviews_7.setText(weekview_nuber[24]);
-
-                            break;
-                        case "26": case "27": case "28": case "29": case "30": case "31":   //4일이면
-                            //26~31
-                            weekviews_1.setText(weekview_nuber[25]);
-                            weekviews_2.setText(weekview_nuber[26]);
-                            weekviews_3.setText(weekview_nuber[27]);
-                            weekviews_4.setText(weekview_nuber[28]);
-                            weekviews_5.setText(weekview_nuber[29]);
-                            weekviews_6.setText(weekview_nuber[30]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {  //목요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1": case "2": case "3":   //1일이면
-
-
-                            //1~3
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[0]);
-                            weekviews_6.setText(weekview_nuber[1]);
-                            weekviews_7.setText(weekview_nuber[2]);
-
-                            break;
-                        case "4": case "5":case "6": case "7": case "8": case "9": case "10":   //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[3]);
-                            weekviews_2.setText(weekview_nuber[4]);
-                            weekviews_3.setText(weekview_nuber[5]);
-                            weekviews_4.setText(weekview_nuber[6]);
-                            weekviews_5.setText(weekview_nuber[7]);
-                            weekviews_6.setText(weekview_nuber[8]);
-                            weekviews_7.setText(weekview_nuber[9]);
-
-                            break;
-                        case "11": case "12": case "13": case "14": case "15": case "16": case "17":     //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[10]);
-                            weekviews_2.setText(weekview_nuber[11]);
-                            weekviews_3.setText(weekview_nuber[12]);
-                            weekviews_4.setText(weekview_nuber[13]);
-                            weekviews_5.setText(weekview_nuber[14]);
-                            weekviews_6.setText(weekview_nuber[15]);
-                            weekviews_7.setText(weekview_nuber[16]);
-
-                            break;
-                        case "18": case "19": case "20": case "21": case "22": case "23": case "24":       //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[17]);
-                            weekviews_2.setText(weekview_nuber[18]);
-                            weekviews_3.setText(weekview_nuber[19]);
-                            weekviews_4.setText(weekview_nuber[20]);
-                            weekviews_5.setText(weekview_nuber[21]);
-                            weekviews_6.setText(weekview_nuber[22]);
-                            weekviews_7.setText(weekview_nuber[23]);
-
-                            break;
-                        case "25": case "26": case "27": case "28": case "29": case "30": case "31":   //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[24]);
-                            weekviews_2.setText(weekview_nuber[25]);
-                            weekviews_3.setText(weekview_nuber[26]);
-                            weekviews_4.setText(weekview_nuber[27]);
-                            weekviews_5.setText(weekview_nuber[28]);
-                            weekviews_6.setText(weekview_nuber[29]);
-                            weekviews_7.setText(weekview_nuber[30]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {  //금요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1": case "2":   //1일이면
-
-
-                            //1~2
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[0]);
-                            weekviews_7.setText(weekview_nuber[1]);
-
-                            break;
-                        case "3": case "4": case "5": case "6": case "7": case "8": case "9":   //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[2]);
-                            weekviews_2.setText(weekview_nuber[3]);
-                            weekviews_3.setText(weekview_nuber[4]);
-                            weekviews_4.setText(weekview_nuber[5]);
-                            weekviews_5.setText(weekview_nuber[6]);
-                            weekviews_6.setText(weekview_nuber[7]);
-                            weekviews_7.setText(weekview_nuber[8]);
-
-                            break;
-                        case "10": case "11": case "12": case "13": case "14": case "15": case "16":     //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[9]);
-                            weekviews_2.setText(weekview_nuber[10]);
-                            weekviews_3.setText(weekview_nuber[11]);
-                            weekviews_4.setText(weekview_nuber[12]);
-                            weekviews_5.setText(weekview_nuber[13]);
-                            weekviews_6.setText(weekview_nuber[14]);
-                            weekviews_7.setText(weekview_nuber[15]);
-
-                            break;
-                        case "17": case "18": case "19": case "20": case "21": case "22": case "23":       //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[16]);
-                            weekviews_2.setText(weekview_nuber[17]);
-                            weekviews_3.setText(weekview_nuber[18]);
-                            weekviews_4.setText(weekview_nuber[19]);
-                            weekviews_5.setText(weekview_nuber[20]);
-                            weekviews_6.setText(weekview_nuber[21]);
-                            weekviews_7.setText(weekview_nuber[22]);
-
-                            break;
-                        case "24": case "25": case "26": case "27": case "28": case "29": case "30":    //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[23]);
-                            weekviews_2.setText(weekview_nuber[24]);
-                            weekviews_3.setText(weekview_nuber[25]);
-                            weekviews_4.setText(weekview_nuber[26]);
-                            weekviews_5.setText(weekview_nuber[27]);
-                            weekviews_6.setText(weekview_nuber[28]);
-                            weekviews_7.setText(weekview_nuber[29]);
-
-                            break;
-
-                        case "31":
-                            weekviews_1.setText(weekview_nuber[30]);
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {  //토요일
-                    switch(curDayFormat.format(date)) { //오늘이 몇 일인가?
-                        case "1":    //1일이면
-
-
-                            //1~2
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[0]);
-
-                            break;
-                        case "2": case "3": case "4": case "5": case "6": case "7": case "8":    //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[1]);
-                            weekviews_2.setText(weekview_nuber[2]);
-                            weekviews_3.setText(weekview_nuber[3]);
-                            weekviews_4.setText(weekview_nuber[4]);
-                            weekviews_5.setText(weekview_nuber[5]);
-                            weekviews_6.setText(weekview_nuber[6]);
-                            weekviews_7.setText(weekview_nuber[7]);
-
-                            break;
-                        case "9": case "10": case "11": case "12": case "13": case "14": case "15":      //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[8]);
-                            weekviews_2.setText(weekview_nuber[9]);
-                            weekviews_3.setText(weekview_nuber[10]);
-                            weekviews_4.setText(weekview_nuber[11]);
-                            weekviews_5.setText(weekview_nuber[12]);
-                            weekviews_6.setText(weekview_nuber[13]);
-                            weekviews_7.setText(weekview_nuber[14]);
-
-                            break;
-                        case "16": case "17": case "18": case "19": case "20": case "21": case "22":        //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[15]);
-                            weekviews_2.setText(weekview_nuber[16]);
-                            weekviews_3.setText(weekview_nuber[17]);
-                            weekviews_4.setText(weekview_nuber[18]);
-                            weekviews_5.setText(weekview_nuber[19]);
-                            weekviews_6.setText(weekview_nuber[20]);
-                            weekviews_7.setText(weekview_nuber[21]);
-
-                            break;
-                        case "23": case "24": case "25": case "26": case "27": case "28": case "29":     //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[22]);
-                            weekviews_2.setText(weekview_nuber[23]);
-                            weekviews_3.setText(weekview_nuber[24]);
-                            weekviews_4.setText(weekview_nuber[25]);
-                            weekviews_5.setText(weekview_nuber[26]);
-                            weekviews_6.setText(weekview_nuber[27]);
-                            weekviews_7.setText(weekview_nuber[28]);
-
-                            break;
-
-                        case "30": case "31":
-                            weekviews_1.setText(weekview_nuber[29]);
-                            weekviews_2.setText(weekview_nuber[30]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-
-
-
             }
         });
         //////////////////////////////////////////////////////////////////////////////
         //저번주로 이동
+        //7일 전 날짜 이용.
 
         last_week.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                //초기화
-                tvDate_week.setText("");
 
 
-                mCal = null;
-                gridView_week.setAdapter(null);
-
-                weekviews_1.setText("");
-                weekviews_2.setText("");
-                weekviews_3.setText("");
-                weekviews_4.setText("");
-                weekviews_5.setText("");
-                weekviews_6.setText("");
-                weekviews_7.setText("");
-
-
-
-                // 오늘에 날짜를 세팅 해준다.
-                long now = System.currentTimeMillis();
-                final Date date = new Date(now);
-
-
-
-                TimeZone jst = TimeZone.getTimeZone("JST");
-                final Calendar cal = Calendar.getInstance(jst); // 주어진 시간대에 맞게 현재 시각으로 초기화된 GregorianCalender 객체를 반환.// 또는 Calendar now = Calendar.getInstance(Locale.KOREA);
-
-                //연,월,일을 따로 저장
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM/yyyy", Locale.KOREAN);
-                final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
-                final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
-                final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
+                // get Current Week of the year
+                Calendar calendar = Calendar.getInstance();
+                Log.v("Current Week", String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR)));
+                int current_week=calendar.get(Calendar.WEEK_OF_YEAR);
+                int week_start_day=calendar.getFirstDayOfWeek(); // this will get the starting day os week in integer format i-e 1 if monday
+                //Toast.makeText(getContext(),"Current Week is"+current_week +"Start Day is"+week_start_day,Toast.LENGTH_SHORT).show();
 
 
 
 
-                tvDate_week.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
+
+                week_num = week_num - 7;
+
+                // get the starting and ending date
+                // Set the calendar to sunday of the current week
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                //System.out.println("Current week = " + Calendar.DAY_OF_WEEK);
+
+                // Print dates of the current week starting on Sunday
+                DateFormat df = new SimpleDateFormat("d", Locale.getDefault());
+                String  startDate = "", midDate_1 = "", midDate_2 = "", midDate_3 = "", midDate_4 = "", midDate_5 = "", endDate = "";
+
+
+
+                calendar.add(Calendar.DATE, week_num);
+                startDate = df.format(calendar.getTime());    //
+
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_1 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_2 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_3 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_4 = df.format(calendar.getTime());
+
+                calendar.add(Calendar.DATE, 1);
+                midDate_5 = df.format(calendar.getTime());    //
+
+
+                calendar.add(Calendar.DATE, 1);  //
+                endDate = df.format(calendar.getTime());
+
+                weekviews_1.setText(startDate);
+                weekviews_2.setText(midDate_1);
+                weekviews_3.setText(midDate_2);
+                weekviews_4.setText(midDate_3);
+                weekviews_5.setText(midDate_4);
+                weekviews_6.setText(midDate_5);
+                weekviews_7.setText(endDate);
+
+
+
+                //만약 현재의 날짜(달)과 이 내용상의 날짜(달)이 다르다면..
+                //변수의 숫자를 하나 깎고, 그 숫자를 더하여 날짜를 한달 전으로 만든다.
+
+/*
+                mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, 1);
+                final int dayNum = mCal.get(Calendar.DAY_OF_WEEK);
+                //mCal = 이번 달 첫째주 요일 숫자.
+
+                mCal_now.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, week_num);
+                final int dayNum_now = mCal_now.get(Calendar.DAY_OF_WEEK);
+                //mCal_now = 현재 화면에 보이는 숫자의 날짜(달)의 첫번째 요일 숫자.
+
+
+ */
 
 
 
 
-                    //위의 textview 부분에서 날짜를 변경하는 부분.
 
-                /*
-                    ver--;
-                if ((cal.get(Calendar.MONTH) + ver) == 0) {
-                    //그 전년도로 이동
-                    ver = 0;
-                    year++;
-                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
+                int length1 = startDate.length();
+                int length2 = endDate.length();
 
-                }else if((cal.get(Calendar.YEAR) - year) != 2020) {
-                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + 7 + ver));
-                }else {
+                if (length1 > length2) {
+                    month_test--;
 
-                    tvDate.setText((cal.get(Calendar.YEAR) - year) + "/" + (cal.get(Calendar.MONTH) + ver));
-                }
+                    //초기화
+                    tvDate_week.setText("");
 
 
-
-                 */
-
-
-
-
-                // Integer.parseInt(curMonthFormat.format(date)) - 1    <= 오늘의 달
-
-
-
-                addday = addday - 7;
-
-
-                //각 주마다 요일 배치하기.
-
-                mCal = Calendar.getInstance();
-                mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, Integer.parseInt(curDayFormat.format(date)) - 7);   //오늘날에서 7일전
-
-
-                /*
-
-                if (mCal.get(Calendar.MONTH) == Integer.parseInt(curMonthFormat.format(date)) - 1){ //이부분 틀린듯
-                    //textview 값 가져와서 비교해보자. 오늘 달이랑.
                     //현재 날짜 텍스트뷰에 뿌려줌
-                    tvDate_week.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
-                }else { //현재 날짜가 아니라는 뜻
-                    lastmonth++;
-                    tvDate_week.setText(curYearFormat.format(date) + "/" + (mCal.get(Calendar.MONTH) - lastmonth));
+                    tvDate_week.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + month_test));
+
+
                 }
-
-
-                 */
-
-
-
-
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {  //일요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4: case 5: case 6: case 7://1일이면
-
-
-                            weekviews_1.setText(weekview_nuber[0]);
-                            weekviews_2.setText(weekview_nuber[1]);
-                            weekviews_3.setText(weekview_nuber[2]);
-                            weekviews_4.setText(weekview_nuber[3]);
-                            weekviews_5.setText(weekview_nuber[4]);
-                            weekviews_6.setText(weekview_nuber[5]);
-                            weekviews_7.setText(weekview_nuber[6]);
-
-                            break;
-                        case 8: case 9: case 10: case 11: case 12: case 13: case 14://1일이면
-
-                            weekviews_1.setText(weekview_nuber[7]);
-                            weekviews_2.setText(weekview_nuber[8]);
-                            weekviews_3.setText(weekview_nuber[9]);
-                            weekviews_4.setText(weekview_nuber[10]);
-                            weekviews_5.setText(weekview_nuber[11]);
-                            weekviews_6.setText(weekview_nuber[12]);
-                            weekviews_7.setText(weekview_nuber[13]);
-
-                            break;
-                        case 15: case 16: case 17: case 18: case 19: case 20: case 21:   //2일이면
-                            //15~21
-                            weekviews_1.setText(weekview_nuber[14]);
-                            weekviews_2.setText(weekview_nuber[15]);
-                            weekviews_3.setText(weekview_nuber[16]);
-                            weekviews_4.setText(weekview_nuber[17]);
-                            weekviews_5.setText(weekview_nuber[18]);
-                            weekviews_6.setText(weekview_nuber[19]);
-                            weekviews_7.setText(weekview_nuber[20]);
-
-                            break;
-                        case 22: case 23: case 24: case 25: case 26: case 27: case 28:    //3일이면
-                            //22~28
-                            weekviews_1.setText(weekview_nuber[21]);
-                            weekviews_2.setText(weekview_nuber[22]);
-                            weekviews_3.setText(weekview_nuber[23]);
-                            weekviews_4.setText(weekview_nuber[24]);
-                            weekviews_5.setText(weekview_nuber[25]);
-                            weekviews_6.setText(weekview_nuber[26]);
-                            weekviews_7.setText(weekview_nuber[27]);
-
-                            break;
-                        case 29: case 30: case 31:   //4일이면
-                            //29~31
-                            weekviews_1.setText(weekview_nuber[28]);
-                            weekviews_2.setText(weekview_nuber[29]);
-                            weekviews_3.setText(weekview_nuber[30]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {  //월요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4: case 5: case 6: //1일이면
-
-
-                            //1~6
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[0]);
-                            weekviews_3.setText(weekview_nuber[1]);
-                            weekviews_4.setText(weekview_nuber[2]);
-                            weekviews_5.setText(weekview_nuber[3]);
-                            weekviews_6.setText(weekview_nuber[4]);
-                            weekviews_7.setText(weekview_nuber[5]);
-
-                            break;
-                        case 7: case 8: case 9: case 10: case 11: case 12: case 13: //1일이면
-                            //7~13
-                            weekviews_1.setText(weekview_nuber[6]);
-                            weekviews_2.setText(weekview_nuber[7]);
-                            weekviews_3.setText(weekview_nuber[8]);
-                            weekviews_4.setText(weekview_nuber[9]);
-                            weekviews_5.setText(weekview_nuber[10]);
-                            weekviews_6.setText(weekview_nuber[11]);
-                            weekviews_7.setText(weekview_nuber[12]);
-
-                            break;
-                        case 14: case 15: case 16: case 17: case 18: case 19: case 20:   //2일이면
-                            //14~20
-                            weekviews_1.setText(weekview_nuber[13]);
-                            weekviews_2.setText(weekview_nuber[14]);
-                            weekviews_3.setText(weekview_nuber[15]);
-                            weekviews_4.setText(weekview_nuber[16]);
-                            weekviews_5.setText(weekview_nuber[17]);
-                            weekviews_6.setText(weekview_nuber[18]);
-                            weekviews_7.setText(weekview_nuber[19]);
-
-                            break;
-                        case 21: case 22: case 23: case 24: case 25: case 26: case 27:     //3일이면
-                            //21~27
-                            weekviews_1.setText(weekview_nuber[20]);
-                            weekviews_2.setText(weekview_nuber[21]);
-                            weekviews_3.setText(weekview_nuber[22]);
-                            weekviews_4.setText(weekview_nuber[23]);
-                            weekviews_5.setText(weekview_nuber[24]);
-                            weekviews_6.setText(weekview_nuber[25]);
-                            weekviews_7.setText(weekview_nuber[26]);
-
-                            break;
-                        case 28: case 29: case 30: case 31:   //4일이면
-                            //28~31
-                            weekviews_1.setText(weekview_nuber[27]);
-                            weekviews_2.setText(weekview_nuber[28]);
-                            weekviews_3.setText(weekview_nuber[29]);
-                            weekviews_4.setText(weekview_nuber[30]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {  //화요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4:   //1일이면
-
-
-                            //1~5
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[0]);
-                            weekviews_4.setText(weekview_nuber[1]);
-                            weekviews_5.setText(weekview_nuber[2]);
-                            weekviews_6.setText(weekview_nuber[3]);
-                            weekviews_7.setText(weekview_nuber[4]);
-
-                            break;
-                        case 5: case 6: case 7: case 8: case 9: case 10: case 11:   //1일이면
-                            //6~12
-                            weekviews_1.setText(weekview_nuber[5]);
-                            weekviews_2.setText(weekview_nuber[6]);
-                            weekviews_3.setText(weekview_nuber[7]);
-                            weekviews_4.setText(weekview_nuber[8]);
-                            weekviews_5.setText(weekview_nuber[9]);
-                            weekviews_6.setText(weekview_nuber[10]);
-                            weekviews_7.setText(weekview_nuber[11]);
-
-                            break;
-                        case 12: case 13: case 14: case 15: case 16: case 17: case 18:     //2일이면
-                            //13~19
-                            weekviews_1.setText(weekview_nuber[12]);
-                            weekviews_2.setText(weekview_nuber[13]);
-                            weekviews_3.setText(weekview_nuber[14]);
-                            weekviews_4.setText(weekview_nuber[15]);
-                            weekviews_5.setText(weekview_nuber[16]);
-                            weekviews_6.setText(weekview_nuber[17]);
-                            weekviews_7.setText(weekview_nuber[18]);
-
-                            break;
-                        case 19: case 20: case 21: case 22: case 23: case 24: case 25:       //3일이면
-                            //20~26
-                            weekviews_1.setText(weekview_nuber[19]);
-                            weekviews_2.setText(weekview_nuber[20]);
-                            weekviews_3.setText(weekview_nuber[21]);
-                            weekviews_4.setText(weekview_nuber[22]);
-                            weekviews_5.setText(weekview_nuber[23]);
-                            weekviews_6.setText(weekview_nuber[24]);
-                            weekviews_7.setText(weekview_nuber[25]);
-
-                            break;
-                        case 26: case 27: case 28: case 29: case 30: case 31:   //4일이면
-                            //27~31
-                            weekviews_1.setText(weekview_nuber[26]);
-                            weekviews_2.setText(weekview_nuber[27]);
-                            weekviews_3.setText(weekview_nuber[28]);
-                            weekviews_4.setText(weekview_nuber[29]);
-                            weekviews_5.setText(weekview_nuber[30]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {  //수요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4:   //1일이면
-
-
-                            //1~4
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[0]);
-                            weekviews_5.setText(weekview_nuber[1]);
-                            weekviews_6.setText(weekview_nuber[2]);
-                            weekviews_7.setText(weekview_nuber[3]);
-
-                            break;
-                        case 5: case 6: case 7: case 8: case 9: case 10: case 11:   //1일이면
-                            //5~11
-                            weekviews_1.setText(weekview_nuber[4]);
-                            weekviews_2.setText(weekview_nuber[5]);
-                            weekviews_3.setText(weekview_nuber[6]);
-                            weekviews_4.setText(weekview_nuber[7]);
-                            weekviews_5.setText(weekview_nuber[8]);
-                            weekviews_6.setText(weekview_nuber[9]);
-                            weekviews_7.setText(weekview_nuber[10]);
-
-                            break;
-                        case 12: case 13: case 14: case 15: case 16: case 17: case 18:     //2일이면
-                            //12~18
-                            weekviews_1.setText(weekview_nuber[11]);
-                            weekviews_2.setText(weekview_nuber[12]);
-                            weekviews_3.setText(weekview_nuber[13]);
-                            weekviews_4.setText(weekview_nuber[14]);
-                            weekviews_5.setText(weekview_nuber[15]);
-                            weekviews_6.setText(weekview_nuber[16]);
-                            weekviews_7.setText(weekview_nuber[17]);
-
-                            break;
-                        case 19: case 20: case 21: case 22: case 23: case 24: case 25:       //3일이면
-                            //19~25
-                            weekviews_1.setText(weekview_nuber[18]);
-                            weekviews_2.setText(weekview_nuber[29]);
-                            weekviews_3.setText(weekview_nuber[20]);
-                            weekviews_4.setText(weekview_nuber[21]);
-                            weekviews_5.setText(weekview_nuber[22]);
-                            weekviews_6.setText(weekview_nuber[23]);
-                            weekviews_7.setText(weekview_nuber[24]);
-
-                            break;
-                        case 26: case 27: case 28: case 29: case 30: case 31:   //4일이면
-                            //26~31
-                            weekviews_1.setText(weekview_nuber[25]);
-                            weekviews_2.setText(weekview_nuber[26]);
-                            weekviews_3.setText(weekview_nuber[27]);
-                            weekviews_4.setText(weekview_nuber[28]);
-                            weekviews_5.setText(weekview_nuber[29]);
-                            weekviews_6.setText(weekview_nuber[30]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {  //목요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3:   //1일이면
-
-
-                            //1~3
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[0]);
-                            weekviews_6.setText(weekview_nuber[1]);
-                            weekviews_7.setText(weekview_nuber[2]);
-
-                            break;
-                        case 4: case 5:case 6: case 7: case 8: case 9: case 10:   //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[3]);
-                            weekviews_2.setText(weekview_nuber[4]);
-                            weekviews_3.setText(weekview_nuber[5]);
-                            weekviews_4.setText(weekview_nuber[6]);
-                            weekviews_5.setText(weekview_nuber[7]);
-                            weekviews_6.setText(weekview_nuber[8]);
-                            weekviews_7.setText(weekview_nuber[9]);
-
-                            break;
-                        case 11: case 12: case 13: case 14: case 15: case 16: case 17:     //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[10]);
-                            weekviews_2.setText(weekview_nuber[11]);
-                            weekviews_3.setText(weekview_nuber[12]);
-                            weekviews_4.setText(weekview_nuber[13]);
-                            weekviews_5.setText(weekview_nuber[14]);
-                            weekviews_6.setText(weekview_nuber[15]);
-                            weekviews_7.setText(weekview_nuber[16]);
-
-                            break;
-                        case 18: case 19: case 20: case 21: case 22: case 23: case 24:       //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[17]);
-                            weekviews_2.setText(weekview_nuber[18]);
-                            weekviews_3.setText(weekview_nuber[19]);
-                            weekviews_4.setText(weekview_nuber[20]);
-                            weekviews_5.setText(weekview_nuber[21]);
-                            weekviews_6.setText(weekview_nuber[22]);
-                            weekviews_7.setText(weekview_nuber[23]);
-
-                            break;
-                        case 25: case 26: case 27: case 28: case 29: case 30: case 31:   //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[24]);
-                            weekviews_2.setText(weekview_nuber[25]);
-                            weekviews_3.setText(weekview_nuber[26]);
-                            weekviews_4.setText(weekview_nuber[27]);
-                            weekviews_5.setText(weekview_nuber[28]);
-                            weekviews_6.setText(weekview_nuber[29]);
-                            weekviews_7.setText(weekview_nuber[30]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {  //금요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2:   //1일이면
-
-
-                            //1~2
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[0]);
-                            weekviews_7.setText(weekview_nuber[1]);
-
-                            break;
-                        case 3: case 4: case 5: case 6: case 7: case 8: case 9:   //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[2]);
-                            weekviews_2.setText(weekview_nuber[3]);
-                            weekviews_3.setText(weekview_nuber[4]);
-                            weekviews_4.setText(weekview_nuber[5]);
-                            weekviews_5.setText(weekview_nuber[6]);
-                            weekviews_6.setText(weekview_nuber[7]);
-                            weekviews_7.setText(weekview_nuber[8]);
-
-                            break;
-                        case 10: case 11: case 12: case 13: case 14: case 15: case 16:     //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[9]);
-                            weekviews_2.setText(weekview_nuber[10]);
-                            weekviews_3.setText(weekview_nuber[11]);
-                            weekviews_4.setText(weekview_nuber[12]);
-                            weekviews_5.setText(weekview_nuber[13]);
-                            weekviews_6.setText(weekview_nuber[14]);
-                            weekviews_7.setText(weekview_nuber[15]);
-
-                            break;
-                        case 17: case 18: case 19: case 20: case 21: case 22: case 23:       //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[16]);
-                            weekviews_2.setText(weekview_nuber[17]);
-                            weekviews_3.setText(weekview_nuber[18]);
-                            weekviews_4.setText(weekview_nuber[19]);
-                            weekviews_5.setText(weekview_nuber[20]);
-                            weekviews_6.setText(weekview_nuber[21]);
-                            weekviews_7.setText(weekview_nuber[22]);
-
-                            break;
-                        case 24: case 25: case 26: case 27: case 28: case 29: case 30:    //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[23]);
-                            weekviews_2.setText(weekview_nuber[24]);
-                            weekviews_3.setText(weekview_nuber[25]);
-                            weekviews_4.setText(weekview_nuber[26]);
-                            weekviews_5.setText(weekview_nuber[27]);
-                            weekviews_6.setText(weekview_nuber[28]);
-                            weekviews_7.setText(weekview_nuber[29]);
-
-                            break;
-
-                        case 31:
-                            weekviews_1.setText(weekview_nuber[30]);
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {  //토요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1:    //1일이면
-
-
-                            //1~2
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[0]);
-
-                            break;
-                        case 2: case 3: case 4: case 5: case 6: case 7: case 8:    //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[1]);
-                            weekviews_2.setText(weekview_nuber[2]);
-                            weekviews_3.setText(weekview_nuber[3]);
-                            weekviews_4.setText(weekview_nuber[4]);
-                            weekviews_5.setText(weekview_nuber[5]);
-                            weekviews_6.setText(weekview_nuber[6]);
-                            weekviews_7.setText(weekview_nuber[7]);
-
-                            break;
-                        case 9: case 10: case 11: case 12: case 13: case 14: case 15:      //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[8]);
-                            weekviews_2.setText(weekview_nuber[9]);
-                            weekviews_3.setText(weekview_nuber[10]);
-                            weekviews_4.setText(weekview_nuber[11]);
-                            weekviews_5.setText(weekview_nuber[12]);
-                            weekviews_6.setText(weekview_nuber[13]);
-                            weekviews_7.setText(weekview_nuber[14]);
-
-                            break;
-                        case 16: case 17: case 18: case 19: case 20: case 21: case 22:        //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[15]);
-                            weekviews_2.setText(weekview_nuber[16]);
-                            weekviews_3.setText(weekview_nuber[17]);
-                            weekviews_4.setText(weekview_nuber[18]);
-                            weekviews_5.setText(weekview_nuber[19]);
-                            weekviews_6.setText(weekview_nuber[20]);
-                            weekviews_7.setText(weekview_nuber[21]);
-
-                            break;
-                        case 23: case 24: case 25: case 26: case 27: case 28: case 29:     //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[22]);
-                            weekviews_2.setText(weekview_nuber[23]);
-                            weekviews_3.setText(weekview_nuber[24]);
-                            weekviews_4.setText(weekview_nuber[25]);
-                            weekviews_5.setText(weekview_nuber[26]);
-                            weekviews_6.setText(weekview_nuber[27]);
-                            weekviews_7.setText(weekview_nuber[28]);
-
-                            break;
-
-                        case 30: case 31:
-                            weekviews_1.setText(weekview_nuber[29]);
-                            weekviews_2.setText(weekview_nuber[30]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1839,540 +505,73 @@ public class weekactivity extends AppCompatActivity {
         next_week.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //초기화
-                tvDate_week.setText("");
-
-
-                mCal = null;
-                gridView_week.setAdapter(null);
-
-                weekviews_1.setText("");
-                weekviews_2.setText("");
-                weekviews_3.setText("");
-                weekviews_4.setText("");
-                weekviews_5.setText("");
-                weekviews_6.setText("");
-                weekviews_7.setText("");
 
 
 
-                // 오늘에 날짜를 세팅 해준다.
-                long now = System.currentTimeMillis();
-                final Date date = new Date(now);
+                // get Current Week of the year
+                Calendar calendar = Calendar.getInstance();
+                Log.v("Current Week", String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR)));
+                int current_week=calendar.get(Calendar.WEEK_OF_YEAR);
+                int week_start_day=calendar.getFirstDayOfWeek(); // this will get the starting day os week in integer format i-e 1 if monday
+                //Toast.makeText(getContext(),"Current Week is"+current_week +"Start Day is"+week_start_day,Toast.LENGTH_SHORT).show();
 
 
+                week_num = week_num + 7;
 
-                TimeZone jst = TimeZone.getTimeZone("JST");
-                final Calendar cal = Calendar.getInstance(jst); // 주어진 시간대에 맞게 현재 시각으로 초기화된 GregorianCalender 객체를 반환.// 또는 Calendar now = Calendar.getInstance(Locale.KOREA);
+                // get the starting and ending date
+                // Set the calendar to sunday of the current week
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                //System.out.println("Current week = " + Calendar.DAY_OF_WEEK);
 
-                //연,월,일을 따로 저장
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM/yyyy", Locale.KOREAN);
-                final SimpleDateFormat curYearFormat = new SimpleDateFormat("yyyy", Locale.KOREA);
-                final SimpleDateFormat curMonthFormat = new SimpleDateFormat("MM", Locale.KOREA);
-                final SimpleDateFormat curDayFormat = new SimpleDateFormat("dd", Locale.KOREA);
+                // Print dates of the current week starting on Sunday
+                DateFormat df = new SimpleDateFormat("d", Locale.getDefault());
+                String startDate = "", midDate_1 = "", midDate_2 = "", midDate_3 = "", midDate_4 = "", midDate_5 = "", endDate = "";
 
-                //현재 날짜 텍스트뷰에 뿌려줌
-                tvDate_week.setText(curYearFormat.format(date) + "/" + curMonthFormat.format(date));
+                calendar.add(Calendar.DATE, week_num);
+                startDate = df.format(calendar.getTime());    //
 
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_1 = df.format(calendar.getTime());
 
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_2 = df.format(calendar.getTime());
 
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_3 = df.format(calendar.getTime());
 
+                calendar.add(Calendar.DATE, 1);  //
+                midDate_4 = df.format(calendar.getTime());
 
-
-
-                addday = addday + 7;
-
-
-                //각 주마다 요일 배치하기.
-
-                mCal = Calendar.getInstance();
-                mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1, Integer.parseInt(curDayFormat.format(date)) + 7);   //오늘날에서 7일전
-
-
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {  //일요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4: case 5: case 6: case 7://1일이면
+                calendar.add(Calendar.DATE, 1);
+                midDate_5 = df.format(calendar.getTime());    //
 
 
-                            weekviews_1.setText(weekview_nuber[0]);
-                            weekviews_2.setText(weekview_nuber[1]);
-                            weekviews_3.setText(weekview_nuber[2]);
-                            weekviews_4.setText(weekview_nuber[3]);
-                            weekviews_5.setText(weekview_nuber[4]);
-                            weekviews_6.setText(weekview_nuber[5]);
-                            weekviews_7.setText(weekview_nuber[6]);
+                calendar.add(Calendar.DATE, 1);  //
+                endDate = df.format(calendar.getTime());
 
-                            break;
-                        case 8: case 9: case 10: case 11: case 12: case 13: case 14://1일이면
+                weekviews_1.setText(startDate);
+                weekviews_2.setText(midDate_1);
+                weekviews_3.setText(midDate_2);
+                weekviews_4.setText(midDate_3);
+                weekviews_5.setText(midDate_4);
+                weekviews_6.setText(midDate_5);
+                weekviews_7.setText(endDate);
 
-                            weekviews_1.setText(weekview_nuber[7]);
-                            weekviews_2.setText(weekview_nuber[8]);
-                            weekviews_3.setText(weekview_nuber[9]);
-                            weekviews_4.setText(weekview_nuber[10]);
-                            weekviews_5.setText(weekview_nuber[11]);
-                            weekviews_6.setText(weekview_nuber[12]);
-                            weekviews_7.setText(weekview_nuber[13]);
+                int length1 = startDate.length();
+                int length2 = endDate.length();
 
-                            break;
-                        case 15: case 16: case 17: case 18: case 19: case 20: case 21:   //2일이면
-                            //15~21
-                            weekviews_1.setText(weekview_nuber[14]);
-                            weekviews_2.setText(weekview_nuber[15]);
-                            weekviews_3.setText(weekview_nuber[16]);
-                            weekviews_4.setText(weekview_nuber[17]);
-                            weekviews_5.setText(weekview_nuber[18]);
-                            weekviews_6.setText(weekview_nuber[19]);
-                            weekviews_7.setText(weekview_nuber[20]);
+                if (length1 > length2) {
+                    month_test++;
 
-                            break;
-                        case 22: case 23: case 24: case 25: case 26: case 27: case 28:    //3일이면
-                            //22~28
-                            weekviews_1.setText(weekview_nuber[21]);
-                            weekviews_2.setText(weekview_nuber[22]);
-                            weekviews_3.setText(weekview_nuber[23]);
-                            weekviews_4.setText(weekview_nuber[24]);
-                            weekviews_5.setText(weekview_nuber[25]);
-                            weekviews_6.setText(weekview_nuber[26]);
-                            weekviews_7.setText(weekview_nuber[27]);
-
-                            break;
-                        case 29: case 30: case 31:   //4일이면
-                            //29~31
-                            weekviews_1.setText(weekview_nuber[28]);
-                            weekviews_2.setText(weekview_nuber[29]);
-                            weekviews_3.setText(weekview_nuber[30]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
+                    //초기화
+                    tvDate_week.setText("");
 
 
-                            break;
+                    //현재 날짜 텍스트뷰에 뿌려줌
+                    tvDate_week.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + month_test));
 
-                    }
+
                 }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {  //월요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4: case 5: case 6: //1일이면
-
-
-                            //1~6
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[0]);
-                            weekviews_3.setText(weekview_nuber[1]);
-                            weekviews_4.setText(weekview_nuber[2]);
-                            weekviews_5.setText(weekview_nuber[3]);
-                            weekviews_6.setText(weekview_nuber[4]);
-                            weekviews_7.setText(weekview_nuber[5]);
-
-                            break;
-                        case 7: case 8: case 9: case 10: case 11: case 12: case 13: //1일이면
-                            //7~13
-                            weekviews_1.setText(weekview_nuber[6]);
-                            weekviews_2.setText(weekview_nuber[7]);
-                            weekviews_3.setText(weekview_nuber[8]);
-                            weekviews_4.setText(weekview_nuber[9]);
-                            weekviews_5.setText(weekview_nuber[10]);
-                            weekviews_6.setText(weekview_nuber[11]);
-                            weekviews_7.setText(weekview_nuber[12]);
-
-                            break;
-                        case 14: case 15: case 16: case 17: case 18: case 19: case 20:   //2일이면
-                            //14~20
-                            weekviews_1.setText(weekview_nuber[13]);
-                            weekviews_2.setText(weekview_nuber[14]);
-                            weekviews_3.setText(weekview_nuber[15]);
-                            weekviews_4.setText(weekview_nuber[16]);
-                            weekviews_5.setText(weekview_nuber[17]);
-                            weekviews_6.setText(weekview_nuber[18]);
-                            weekviews_7.setText(weekview_nuber[19]);
-
-                            break;
-                        case 21: case 22: case 23: case 24: case 25: case 26: case 27:     //3일이면
-                            //21~27
-                            weekviews_1.setText(weekview_nuber[20]);
-                            weekviews_2.setText(weekview_nuber[21]);
-                            weekviews_3.setText(weekview_nuber[22]);
-                            weekviews_4.setText(weekview_nuber[23]);
-                            weekviews_5.setText(weekview_nuber[24]);
-                            weekviews_6.setText(weekview_nuber[25]);
-                            weekviews_7.setText(weekview_nuber[26]);
-
-                            break;
-                        case 28: case 29: case 30: case 31:   //4일이면
-                            //28~31
-                            weekviews_1.setText(weekview_nuber[27]);
-                            weekviews_2.setText(weekview_nuber[28]);
-                            weekviews_3.setText(weekview_nuber[29]);
-                            weekviews_4.setText(weekview_nuber[30]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {  //화요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4:   //1일이면
-
-
-                            //1~5
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[0]);
-                            weekviews_4.setText(weekview_nuber[1]);
-                            weekviews_5.setText(weekview_nuber[2]);
-                            weekviews_6.setText(weekview_nuber[3]);
-                            weekviews_7.setText(weekview_nuber[4]);
-
-                            break;
-                        case 5: case 6: case 7: case 8: case 9: case 10: case 11:   //1일이면
-                            //6~12
-                            weekviews_1.setText(weekview_nuber[5]);
-                            weekviews_2.setText(weekview_nuber[6]);
-                            weekviews_3.setText(weekview_nuber[7]);
-                            weekviews_4.setText(weekview_nuber[8]);
-                            weekviews_5.setText(weekview_nuber[9]);
-                            weekviews_6.setText(weekview_nuber[10]);
-                            weekviews_7.setText(weekview_nuber[11]);
-
-                            break;
-                        case 12: case 13: case 14: case 15: case 16: case 17: case 18:     //2일이면
-                            //13~19
-                            weekviews_1.setText(weekview_nuber[12]);
-                            weekviews_2.setText(weekview_nuber[13]);
-                            weekviews_3.setText(weekview_nuber[14]);
-                            weekviews_4.setText(weekview_nuber[15]);
-                            weekviews_5.setText(weekview_nuber[16]);
-                            weekviews_6.setText(weekview_nuber[17]);
-                            weekviews_7.setText(weekview_nuber[18]);
-
-                            break;
-                        case 19: case 20: case 21: case 22: case 23: case 24: case 25:       //3일이면
-                            //20~26
-                            weekviews_1.setText(weekview_nuber[19]);
-                            weekviews_2.setText(weekview_nuber[20]);
-                            weekviews_3.setText(weekview_nuber[21]);
-                            weekviews_4.setText(weekview_nuber[22]);
-                            weekviews_5.setText(weekview_nuber[23]);
-                            weekviews_6.setText(weekview_nuber[24]);
-                            weekviews_7.setText(weekview_nuber[25]);
-
-                            break;
-                        case 26: case 27: case 28: case 29: case 30: case 31:   //4일이면
-                            //27~31
-                            weekviews_1.setText(weekview_nuber[26]);
-                            weekviews_2.setText(weekview_nuber[27]);
-                            weekviews_3.setText(weekview_nuber[28]);
-                            weekviews_4.setText(weekview_nuber[29]);
-                            weekviews_5.setText(weekview_nuber[30]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {  //수요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3: case 4:   //1일이면
-
-
-                            //1~4
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[0]);
-                            weekviews_5.setText(weekview_nuber[1]);
-                            weekviews_6.setText(weekview_nuber[2]);
-                            weekviews_7.setText(weekview_nuber[3]);
-
-                            break;
-                        case 5: case 6: case 7: case 8: case 9: case 10: case 11:   //1일이면
-                            //5~11
-                            weekviews_1.setText(weekview_nuber[4]);
-                            weekviews_2.setText(weekview_nuber[5]);
-                            weekviews_3.setText(weekview_nuber[6]);
-                            weekviews_4.setText(weekview_nuber[7]);
-                            weekviews_5.setText(weekview_nuber[8]);
-                            weekviews_6.setText(weekview_nuber[9]);
-                            weekviews_7.setText(weekview_nuber[10]);
-
-                            break;
-                        case 12: case 13: case 14: case 15: case 16: case 17: case 18:     //2일이면
-                            //12~18
-                            weekviews_1.setText(weekview_nuber[11]);
-                            weekviews_2.setText(weekview_nuber[12]);
-                            weekviews_3.setText(weekview_nuber[13]);
-                            weekviews_4.setText(weekview_nuber[14]);
-                            weekviews_5.setText(weekview_nuber[15]);
-                            weekviews_6.setText(weekview_nuber[16]);
-                            weekviews_7.setText(weekview_nuber[17]);
-
-                            break;
-                        case 19: case 20: case 21: case 22: case 23: case 24: case 25:       //3일이면
-                            //19~25
-                            weekviews_1.setText(weekview_nuber[18]);
-                            weekviews_2.setText(weekview_nuber[29]);
-                            weekviews_3.setText(weekview_nuber[20]);
-                            weekviews_4.setText(weekview_nuber[21]);
-                            weekviews_5.setText(weekview_nuber[22]);
-                            weekviews_6.setText(weekview_nuber[23]);
-                            weekviews_7.setText(weekview_nuber[24]);
-
-                            break;
-                        case 26: case 27: case 28: case 29: case 30: case 31:   //4일이면
-                            //26~31
-                            weekviews_1.setText(weekview_nuber[25]);
-                            weekviews_2.setText(weekview_nuber[26]);
-                            weekviews_3.setText(weekview_nuber[27]);
-                            weekviews_4.setText(weekview_nuber[28]);
-                            weekviews_5.setText(weekview_nuber[29]);
-                            weekviews_6.setText(weekview_nuber[30]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {  //목요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2: case 3:   //1일이면
-
-
-                            //1~3
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[0]);
-                            weekviews_6.setText(weekview_nuber[1]);
-                            weekviews_7.setText(weekview_nuber[2]);
-
-                            break;
-                        case 4: case 5:case 6: case 7: case 8: case 9: case 10:   //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[3]);
-                            weekviews_2.setText(weekview_nuber[4]);
-                            weekviews_3.setText(weekview_nuber[5]);
-                            weekviews_4.setText(weekview_nuber[6]);
-                            weekviews_5.setText(weekview_nuber[7]);
-                            weekviews_6.setText(weekview_nuber[8]);
-                            weekviews_7.setText(weekview_nuber[9]);
-
-                            break;
-                        case 11: case 12: case 13: case 14: case 15: case 16: case 17:     //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[10]);
-                            weekviews_2.setText(weekview_nuber[11]);
-                            weekviews_3.setText(weekview_nuber[12]);
-                            weekviews_4.setText(weekview_nuber[13]);
-                            weekviews_5.setText(weekview_nuber[14]);
-                            weekviews_6.setText(weekview_nuber[15]);
-                            weekviews_7.setText(weekview_nuber[16]);
-
-                            break;
-                        case 18: case 19: case 20: case 21: case 22: case 23: case 24:       //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[17]);
-                            weekviews_2.setText(weekview_nuber[18]);
-                            weekviews_3.setText(weekview_nuber[19]);
-                            weekviews_4.setText(weekview_nuber[20]);
-                            weekviews_5.setText(weekview_nuber[21]);
-                            weekviews_6.setText(weekview_nuber[22]);
-                            weekviews_7.setText(weekview_nuber[23]);
-
-                            break;
-                        case 25: case 26: case 27: case 28: case 29: case 30: case 31:   //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[24]);
-                            weekviews_2.setText(weekview_nuber[25]);
-                            weekviews_3.setText(weekview_nuber[26]);
-                            weekviews_4.setText(weekview_nuber[27]);
-                            weekviews_5.setText(weekview_nuber[28]);
-                            weekviews_6.setText(weekview_nuber[29]);
-                            weekviews_7.setText(weekview_nuber[30]);
-
-                            break;
-
-                    }
-                }
-
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {  //금요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1: case 2:   //1일이면
-
-
-                            //1~2
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[0]);
-                            weekviews_7.setText(weekview_nuber[1]);
-
-                            break;
-                        case 3: case 4: case 5: case 6: case 7: case 8: case 9:   //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[2]);
-                            weekviews_2.setText(weekview_nuber[3]);
-                            weekviews_3.setText(weekview_nuber[4]);
-                            weekviews_4.setText(weekview_nuber[5]);
-                            weekviews_5.setText(weekview_nuber[6]);
-                            weekviews_6.setText(weekview_nuber[7]);
-                            weekviews_7.setText(weekview_nuber[8]);
-
-                            break;
-                        case 10: case 11: case 12: case 13: case 14: case 15: case 16:     //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[9]);
-                            weekviews_2.setText(weekview_nuber[10]);
-                            weekviews_3.setText(weekview_nuber[11]);
-                            weekviews_4.setText(weekview_nuber[12]);
-                            weekviews_5.setText(weekview_nuber[13]);
-                            weekviews_6.setText(weekview_nuber[14]);
-                            weekviews_7.setText(weekview_nuber[15]);
-
-                            break;
-                        case 17: case 18: case 19: case 20: case 21: case 22: case 23:       //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[16]);
-                            weekviews_2.setText(weekview_nuber[17]);
-                            weekviews_3.setText(weekview_nuber[18]);
-                            weekviews_4.setText(weekview_nuber[19]);
-                            weekviews_5.setText(weekview_nuber[20]);
-                            weekviews_6.setText(weekview_nuber[21]);
-                            weekviews_7.setText(weekview_nuber[22]);
-
-                            break;
-                        case 24: case 25: case 26: case 27: case 28: case 29: case 30:    //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[23]);
-                            weekviews_2.setText(weekview_nuber[24]);
-                            weekviews_3.setText(weekview_nuber[25]);
-                            weekviews_4.setText(weekview_nuber[26]);
-                            weekviews_5.setText(weekview_nuber[27]);
-                            weekviews_6.setText(weekview_nuber[28]);
-                            weekviews_7.setText(weekview_nuber[29]);
-
-                            break;
-
-                        case 31:
-                            weekviews_1.setText(weekview_nuber[30]);
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-                ///////
-                if (mCal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {  //토요일
-                    switch(Integer.parseInt(curDayFormat.format(date)) + addday) { //오늘이 몇 일인가?
-                        case 1:    //1일이면
-
-
-                            //1~2
-                            weekviews_1.setText(weekview_nuber[31]);    //빈 값.
-                            weekviews_2.setText(weekview_nuber[31]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[0]);
-
-                            break;
-                        case 2: case 3: case 4: case 5: case 6: case 7: case 8:    //1일이면
-                            //4~10
-                            weekviews_1.setText(weekview_nuber[1]);
-                            weekviews_2.setText(weekview_nuber[2]);
-                            weekviews_3.setText(weekview_nuber[3]);
-                            weekviews_4.setText(weekview_nuber[4]);
-                            weekviews_5.setText(weekview_nuber[5]);
-                            weekviews_6.setText(weekview_nuber[6]);
-                            weekviews_7.setText(weekview_nuber[7]);
-
-                            break;
-                        case 9: case 10: case 11: case 12: case 13: case 14: case 15:      //2일이면
-                            //11~17
-                            weekviews_1.setText(weekview_nuber[8]);
-                            weekviews_2.setText(weekview_nuber[9]);
-                            weekviews_3.setText(weekview_nuber[10]);
-                            weekviews_4.setText(weekview_nuber[11]);
-                            weekviews_5.setText(weekview_nuber[12]);
-                            weekviews_6.setText(weekview_nuber[13]);
-                            weekviews_7.setText(weekview_nuber[14]);
-
-                            break;
-                        case 16: case 17: case 18: case 19: case 20: case 21: case 22:        //3일이면
-                            //18~24
-                            weekviews_1.setText(weekview_nuber[15]);
-                            weekviews_2.setText(weekview_nuber[16]);
-                            weekviews_3.setText(weekview_nuber[17]);
-                            weekviews_4.setText(weekview_nuber[18]);
-                            weekviews_5.setText(weekview_nuber[19]);
-                            weekviews_6.setText(weekview_nuber[20]);
-                            weekviews_7.setText(weekview_nuber[21]);
-
-                            break;
-                        case 23: case 24: case 25: case 26: case 27: case 28: case 29:     //4일이면
-                            //25~31
-                            weekviews_1.setText(weekview_nuber[22]);
-                            weekviews_2.setText(weekview_nuber[23]);
-                            weekviews_3.setText(weekview_nuber[24]);
-                            weekviews_4.setText(weekview_nuber[25]);
-                            weekviews_5.setText(weekview_nuber[26]);
-                            weekviews_6.setText(weekview_nuber[27]);
-                            weekviews_7.setText(weekview_nuber[28]);
-
-                            break;
-
-                        case 30: case 31:
-                            weekviews_1.setText(weekview_nuber[29]);
-                            weekviews_2.setText(weekview_nuber[30]);
-                            weekviews_3.setText(weekview_nuber[31]);
-                            weekviews_4.setText(weekview_nuber[31]);
-                            weekviews_5.setText(weekview_nuber[31]);
-                            weekviews_6.setText(weekview_nuber[31]);
-                            weekviews_7.setText(weekview_nuber[31]);
-
-                            break;
-
-                    }
-                }
-
-
-
-
-
-
-
 
 
 
@@ -2382,6 +581,233 @@ public class weekactivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //날짜 클릭시 (Button) 대화상자 보이기 (dialog)
+        btn1.setOnClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                dialogView = (View) View.inflate(weekactivity.this,
+                        R.layout.dialog_week, null);
+
+
+                //제목
+                final EditText dlogEdt1 = (EditText) dialogView.findViewById(R.id.dlgEdt1);
+
+                //장소
+                final EditText dlogEdt6 = (EditText) dialogView.findViewById(R.id.dlgEdt6);
+
+                //메모
+                final EditText dlogEdt7 = (EditText) dialogView.findViewById(R.id.dlgEdt7);
+
+
+                AlertDialog.Builder dlg = new AlertDialog.Builder(weekactivity.this);
+                dlg.setTitle("일정 입력");
+                dlg.setView(dialogView);    //화면 바뀜
+
+                dlg.setPositiveButton("저장", new DialogInterface.OnClickListener() {
+                    //입력 버튼을 누르면 처리하는 부분 (파일처리 해야함)
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //dialog에서 읽어와서 파일에 넣어주는 부분.
+
+
+                        //만약 새로 띄워진 dialog화면이 null값이라면..
+
+
+                        //이제 날짜를 받아와서 파일 제목에 써주는 역할을 해야함.
+                        //"x(월)" + "_" + "y(일)" + ".txt"
+                        //만약 6월 30일에 글을 쓰면 파일 이름은 => "6_30_1.txt" 이렇게 뜬다.   <= 파일 제목의 경우
+                        try {
+                            //제목
+                            String value = dlogEdt1.getText().toString();
+                            //장소
+                            String value6 = dlogEdt6.getText().toString();
+                            //메모
+                            String value7 = dlogEdt7.getText().toString();
+
+
+                            //제목
+                            FileOutputStream outFs = openFileOutput(file_month + "_" + getItem(position) + "_" + "1" + ".txt",
+                                    Context.MODE_PRIVATE);
+                            //윗 부분에서 "file.txt"부분이 파일 제목인데,
+                            //이 부분을 파일 제목에 써줘야함.
+
+
+                            //현재 에러뜨는 getItem(position)부분에 일(몇일)에 대한 정보 들어가게하기.
+
+
+                            //장소
+                            FileOutputStream outFs6 = openFileOutput(file_month + "_" + getItem(position) + "_" + "6" + ".txt",
+                                    Context.MODE_PRIVATE);
+
+
+                            //메모
+                            FileOutputStream outFs7 = openFileOutput(file_month + "_" + getItem(position) + "_" + "7" + ".txt",
+                                    Context.MODE_PRIVATE);
+
+
+                            //제목
+                            outFs.write(value.getBytes());
+                            outFs.close();
+                            //장소
+                            outFs6.write(value6.getBytes());
+                            outFs6.close();
+                            //메모
+                            outFs7.write(value7.getBytes());
+                            outFs7.close();
+
+
+                            Toast.makeText(getApplicationContext(), "글이 작성됨",
+                                    Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                        }
+
+
+                    }
+
+
+                });
+                dlg.setNegativeButton("뒤로 가기", null);
+
+
+                //삭제하는 부분
+                dlg.setNeutralButton("삭제", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        //이 밑 부분은 파일을 읽어오는 부분이다.
+                        //파일을 삭제해야 한다.
+
+                        //제목
+                        boolean inFs = deleteFile(file_month + "_" + getItem(position) + "_" + "1" + ".txt");
+
+                                /*
+                                byte[] txt = new byte[30];
+                                inFs.read(txt);
+                                String str = new String(txt);
+
+
+                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
+                                inFs.close();
+
+
+
+
+                                 */
+
+
+                        //장소
+                        boolean inFs6 = deleteFile(file_month + "_" + getItem(position) + "_" + "6" + ".txt");
+                                /*
+                                byte[] txt6 = new byte[30];
+                                inFs6.read(txt6);
+                                String str6 = new String(txt6);
+
+
+
+                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
+                                inFs6.close();
+
+
+                                 */
+
+
+                        //메모
+                        boolean inFs7 = deleteFile(file_month + "_" + getItem(position) + "_" + "7" + ".txt");
+                                /*
+                                byte[] txt7 = new byte[30];
+                                inFs7.read(txt7);
+                                String str7 = new String(txt7);
+
+
+
+                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
+                                inFs7.close();
+
+
+                                 */
+
+
+                    }
+
+
+                });
+                dlg.show();
+
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + getItem(position) + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+                    String str = new String(txt);
+
+
+                    dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
+                    inFs.close();
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + getItem(position) + "_" + "6" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+                    String str6 = new String(txt6);
+
+
+                    dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
+                    inFs6.close();
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + getItem(position) + "_" + "7" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+                    String str7 = new String(txt7);
+
+
+                    dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
+                    inFs7.close();
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+                    Toast.makeText(getApplicationContext(), "내용 없음",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                return false;
+            }
+
+
+
+
+        }));
 
 
     }
