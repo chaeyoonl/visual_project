@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
+
         <Button
             android:id="@+id/button1_week"
             android:layout_width="wrap_content"
@@ -138,7 +139,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -149,7 +150,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -160,7 +161,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -171,7 +172,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -182,7 +183,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_5"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -193,7 +194,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_6"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -204,7 +205,7 @@
             android:textColor="#000000"
             android:textSize="20sp" />
 
-        <TextView
+        <Button
             android:id="@+id/weekviews_7"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -220,7 +221,7 @@
     <GridView
         android:id="@+id/gridview_week"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="1sp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
         android:listSelector="#58D6E6"
@@ -229,88 +230,224 @@
 
     <ScrollView
         android:id="@+id/ScrollView1"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        android:layout_height="500dp"
+
+        android:fillViewport="true">
+
 
         <LinearLayout
 
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
 
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
 
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btn1"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00시~02시" />
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/btn1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00시~02시" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_1"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="02시~04시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_2"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="04시~06시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_3"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="06시~08시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_4"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="08시~10시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_5"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10시~12시" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_6"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btn7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12시~14시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_7"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="14시~16시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_8"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="16시~18시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_9"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="18시~20시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_10"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="20시~22시" />
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_11"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <Button
                 android:id="@+id/btn12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="22시~24시" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_12"/>
+        </LinearLayout>
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>
