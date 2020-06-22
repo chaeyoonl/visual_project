@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 gridView.setAdapter(null);
                 ver = 1;
                 monthlist = 0;
+                yearcount = 0;
                 year = 1;
 
 

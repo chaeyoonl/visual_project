@@ -253,6 +253,8 @@ public class weekactivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 week_num = 0;
+                yearcount = 0;
+                month_test = 1;
 
 
                 // get Current Week of the year
@@ -549,6 +551,7 @@ public class weekactivity extends AppCompatActivity {
 
                 if (length1 > length2) {
                     month_test++;
+
 
                     //초기화
                     tvDate_week.setText("");
