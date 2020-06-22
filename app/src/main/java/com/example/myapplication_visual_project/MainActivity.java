@@ -1,3 +1,4 @@
+
 package com.example.myapplication_visual_project;
 
 import androidx.appcompat.app.AlertDialog;
@@ -6,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -279,11 +281,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 mCal = Calendar.getInstance();
 
 
-                monthlist++;
+                monthlist--;
 
 
                 //이번달 1일 무슨요일인지 판단 mCal.set(Year,Month,Day)
-                mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1 - monthlist, 1);
+                mCal.set(Integer.parseInt(curYearFormat.format(date)), Integer.parseInt(curMonthFormat.format(date)) - 1 + monthlist, 1);
                 int dayNum = mCal.get(Calendar.DAY_OF_WEEK);
                 //1일 - 요일 매칭 시키기 위해 공백 add
                 for (int i = 1; i < dayNum; i++) {
@@ -292,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
 
-                setCalendarDate(Integer.parseInt(curMonthFormat.format(date)) - 1 - monthlist);
+                setCalendarDate(mCal.get(Calendar.MONTH) + 1);
                 gridAdapter = new GridAdapter(getApplicationContext(), dayList);
                 gridView.setAdapter(gridAdapter);
 
@@ -359,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
 
-                setCalendarDate(mCal.get(Calendar.MONTH) + monthlist);
+                setCalendarDate(mCal.get(Calendar.MONTH) + 1);
                 gridAdapter = new GridAdapter(getApplicationContext(), dayList);
                 gridView.setAdapter(gridAdapter);
 
@@ -448,9 +450,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public Dialog onCreateDialog(int id) {
         super.onCreateDialog(id);
-
     }
-
      */
 
 
@@ -508,6 +508,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
             //날짜 클릭시 (gridview) 대화상자 보이기 (dialog)
+            final ViewHolder finalHolder = holder;
+            final ViewHolder finalHolder1 = holder;
             holder.tvItemGridView.setOnLongClickListener((new View.OnLongClickListener() {
 
                 @Override
@@ -634,6 +636,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                                 Toast.makeText(getApplicationContext(), "글이 작성됨",
                                         Toast.LENGTH_SHORT).show();
+
+                                finalHolder1.tvItemGridView.setTextColor(Color.RED);
+
                             } catch (IOException e) {
                             }
 
@@ -661,14 +666,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt = new byte[30];
                                 inFs.read(txt);
                                 String str = new String(txt);
-
-
                                 dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
                                 inFs.close();
-
-
-
-
                                  */
 
 
@@ -678,13 +677,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt2 = new byte[30];
                                 inFs2.read(txt2);
                                 String str2 = new String(txt2);
-
-
-
                                 dlogEdt2.setText(str2); //시작시간 부분 EditText부분에 내용 넣어주기.
                                 inFs2.close();
-
-
                                  */
 
 
@@ -694,13 +688,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt3 = new byte[30];
                                 inFs3.read(txt3);
                                 String str3 = new String(txt3);
-
-
-
-
                                 dlogEdt3.setText(str3); //시작시간 부분 EditText부분에 내용 넣어주기.
                                 inFs3.close();
-
                                  */
 
                             //종료 시간
@@ -709,12 +698,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt4 = new byte[30];
                                 inFs4.read(txt4);
                                 String str4 = new String(txt4);
-
-
-
                                 dlogEdt4.setText(str4); //시작시간 부분 EditText부분에 내용 넣어주기.
                                 inFs4.close();
-
                                  */
 
 
@@ -724,13 +709,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt5 = new byte[30];
                                 inFs5.read(txt5);
                                 String str5 = new String(txt5);
-
-
-
                                 dlogEdt5.setText(str5); //시작시간 부분 EditText부분에 내용 넣어주기.
                                 inFs5.close();
-
-
                                  */
 
                             //장소
@@ -739,13 +719,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt6 = new byte[30];
                                 inFs6.read(txt6);
                                 String str6 = new String(txt6);
-
-
-
                                 dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
                                 inFs6.close();
-
-
                                  */
 
 
@@ -755,14 +730,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 byte[] txt7 = new byte[30];
                                 inFs7.read(txt7);
                                 String str7 = new String(txt7);
-
-
-
                                 dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
                                 inFs7.close();
-
-
                                  */
+                                //holder.tvItemGridView.setTextColor(getResources().getColor(R.color.BLACK));
+
+                            finalHolder.tvItemGridView.setTextColor(Color.BLACK);
+
+
+
+
 
 
                         }
@@ -863,14 +840,79 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             }));
 
-            //해당 날짜 텍스트 컬러,배경 변경
-            mCal = Calendar.getInstance();
-            //오늘 day 가져옴
-            Integer today = mCal.get(Calendar.DAY_OF_MONTH);
-            String sToday = String.valueOf(today);
-            if (sToday.equals(getItem(position))) { //오늘 day 텍스트 컬러 변경
-                holder.tvItemGridView.setTextColor(getResources().getColor(R.color.colorAccent));
+            //이 밑 부분은 파일을 읽어오는 부분이다.
+            try {
+                //제목
+                final FileInputStream inFs = openFileInput(file_month + "_" + getItem(position) + "_" + "1" + ".txt");
+                byte[] txt = new byte[30];
+                inFs.read(txt);
+                inFs.close();
+
+
+                //시작시간
+                FileInputStream inFs2 = openFileInput(file_month + "_" + getItem(position) + "_" + "2" + ".txt");
+                byte[] txt2 = new byte[30];
+                inFs2.read(txt2);
+                inFs2.close();
+
+
+                //시작 분
+                FileInputStream inFs3 = openFileInput(file_month + "_" + getItem(position) + "_" + "3" + ".txt");
+                byte[] txt3 = new byte[30];
+                inFs3.read(txt3);
+                inFs3.close();
+
+                //종료 시간
+                FileInputStream inFs4 = openFileInput(file_month + "_" + getItem(position) + "_" + "4" + ".txt");
+                byte[] txt4 = new byte[30];
+                inFs4.read(txt4);
+                inFs4.close();
+
+
+                //종료 분
+                FileInputStream inFs5 = openFileInput(file_month + "_" + getItem(position) + "_" + "5" + ".txt");
+                byte[] txt5 = new byte[30];
+                inFs5.read(txt5);
+                inFs5.close();
+
+
+                //장소
+                FileInputStream inFs6 = openFileInput(file_month + "_" + getItem(position) + "_" + "6" + ".txt");
+                byte[] txt6 = new byte[30];
+                inFs6.read(txt6);
+                inFs6.close();
+
+
+                //메모
+                FileInputStream inFs7 = openFileInput(file_month + "_" + getItem(position) + "_" + "7" + ".txt");
+                byte[] txt7 = new byte[30];
+                inFs7.read(txt7);
+                inFs7.close();
+
+                if (inFs != null) {    //파일 내용이 빈 것이 아니라면..
+
+
+
+
+                    holder.tvItemGridView.setTextColor(Color.RED);
+
+
+
+
+
+
+                }
+
+
+
+            } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
             }
+
+
+
+
+
             return convertView;
         }
     }

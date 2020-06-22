@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -70,27 +71,7 @@ public class weekactivity extends AppCompatActivity {
      * 연/월 텍스트뷰
      */
     TextView tvDate_week;
-    /**
-     * 그리드뷰 어댑터
-     */
-    //weekactivity.GridAdapter gridAdapter;
 
-    /**
-     * 일 저장 할 리스트
-     */
-    ArrayList<String> dayList;
-
-
-    /**
-     * 그리드뷰
-     */
-    GridView gridView_week;
-
-    /**
-     * 캘린더 변수
-     */
-    Calendar mCal;
-    Calendar mCal_now;
 
     int month_test = 1;
 
@@ -144,7 +125,7 @@ public class weekactivity extends AppCompatActivity {
 
 
         tvDate_week = (TextView) findViewById(R.id.tv_date_week);
-        gridView_week = (GridView) findViewById(R.id.gridview_week);
+        //gridView_week = (GridView) findViewById(R.id.gridview_week);
 
 
         todaybutton_week = (Button) findViewById(R.id.todaybutton_week);
@@ -526,6 +507,13 @@ public class weekactivity extends AppCompatActivity {
             }
         });
 
+        weekviews_1.setBackgroundColor(Color.BLUE);
+        weekviews_2.setBackgroundColor(Color.BLUE);
+        weekviews_3.setBackgroundColor(Color.BLUE);
+        weekviews_4.setBackgroundColor(Color.BLUE);
+        weekviews_5.setBackgroundColor(Color.BLUE);
+        weekviews_6.setBackgroundColor(Color.BLUE);
+        weekviews_7.setBackgroundColor(Color.BLUE);
 
         //(몇일인지)날짜 부분 클릭시 <첫번째 TextView부분임>
         //변수안에 값을 줌.
@@ -536,6 +524,15 @@ public class weekactivity extends AppCompatActivity {
                 // TextView 클릭될 시 할 코드작성
 
                 month_text = String.valueOf(weekviews_1.getText());
+
+
+                weekviews_1.setBackgroundColor(Color.RED);
+                weekviews_2.setBackgroundColor(Color.BLUE);
+                weekviews_3.setBackgroundColor(Color.BLUE);
+                weekviews_4.setBackgroundColor(Color.BLUE);
+                weekviews_5.setBackgroundColor(Color.BLUE);
+                weekviews_6.setBackgroundColor(Color.BLUE);
+                weekviews_7.setBackgroundColor(Color.BLUE);
 
 
 
@@ -1010,6 +1007,14 @@ public class weekactivity extends AppCompatActivity {
 
                 month_text = String.valueOf(weekviews_2.getText());
 
+                weekviews_1.setBackgroundColor(Color.BLUE);
+                weekviews_2.setBackgroundColor(Color.RED);
+                weekviews_3.setBackgroundColor(Color.BLUE);
+                weekviews_4.setBackgroundColor(Color.BLUE);
+                weekviews_5.setBackgroundColor(Color.BLUE);
+                weekviews_6.setBackgroundColor(Color.BLUE);
+                weekviews_7.setBackgroundColor(Color.BLUE);
+
 
                 //btn1부분
                 //////////////////////////////////////////////////////////////////////////
@@ -1481,6 +1486,16 @@ public class weekactivity extends AppCompatActivity {
                 month_text = String.valueOf(weekviews_3.getText());
 
 
+
+                weekviews_1.setBackgroundColor(Color.BLUE);
+                weekviews_2.setBackgroundColor(Color.BLUE);
+                weekviews_3.setBackgroundColor(Color.RED);
+                weekviews_4.setBackgroundColor(Color.BLUE);
+                weekviews_5.setBackgroundColor(Color.BLUE);
+                weekviews_6.setBackgroundColor(Color.BLUE);
+                weekviews_7.setBackgroundColor(Color.BLUE);
+
+
                 //btn1부분
                 //////////////////////////////////////////////////////////////////////////
                 file_month = String.valueOf((cal.get(Calendar.MONTH) + month_test));
@@ -1950,6 +1965,473 @@ public class weekactivity extends AppCompatActivity {
 
                 month_text = String.valueOf(weekviews_4.getText());
 
+
+                weekviews_1.setBackgroundColor(Color.BLUE);
+                weekviews_2.setBackgroundColor(Color.BLUE);
+                weekviews_3.setBackgroundColor(Color.BLUE);
+                weekviews_4.setBackgroundColor(Color.RED);
+                weekviews_5.setBackgroundColor(Color.BLUE);
+                weekviews_6.setBackgroundColor(Color.BLUE);
+                weekviews_7.setBackgroundColor(Color.BLUE);
+
+
+                //btn1부분
+                //////////////////////////////////////////////////////////////////////////
+                file_month = String.valueOf((cal.get(Calendar.MONTH) + month_test));
+
+
+
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "0002" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "0002" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "0002" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_1.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_1.setText("");
+                }
+
+
+                //btn2 부분
+                //////////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "0204" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "0204" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "0204" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_2.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_2.setText("");
+                }
+
+
+                //btn3부분
+                //////////////////////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "0406" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "0406" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "0406" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_3.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_3.setText("");
+                }
+
+
+                //btn4부분
+                //////////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "0608" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "0608" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "0608" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_4.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_4.setText("");
+                }
+
+                //btn5부분
+                ////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "0810" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "0810" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "0810" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_5.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_5.setText("");
+                }
+
+
+                //btn6부분
+                //////////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "1012" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "1012" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "1012" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_6.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_6.setText("");
+                }
+
+                //btn7부분
+                ////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "1214" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "1214" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "1214" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_7.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_7.setText("");
+                }
+
+                //btn8부분
+                /////////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "1416" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "1416" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "1416" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_8.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_8.setText("");
+                }
+
+                //btn9부분
+                //////////////////////////////////////////////////////////////////
+
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "1618" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "1618" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "1618" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_9.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_9.setText("");
+                }
+
+                //btn10부분
+                //////////////////////////////////////////////////////////////
+
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "1820" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "1820" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "1820" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_10.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_10.setText("");
+                }
+
+                //btn11부분
+                /////////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "2022" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "2022" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "2022" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_11.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_11.setText("");
+                }
+
+                //btn12부분
+                /////////////////////////////////////////////////////////////
+
+                //이 밑 부분은 파일을 읽어오는 부분이다.
+                try {
+                    //제목
+                    FileInputStream inFs = openFileInput(file_month + "_" + month_text + "_" + "2224" + "_" + "1" + ".txt");
+                    byte[] txt = new byte[30];
+                    inFs.read(txt);
+
+
+
+                    //장소
+                    FileInputStream inFs6 = openFileInput(file_month + "_" + month_text + "_" + "2224" + "_" + "2" + ".txt");
+                    byte[] txt6 = new byte[30];
+                    inFs6.read(txt6);
+
+
+                    //메모
+                    FileInputStream inFs7 = openFileInput(file_month + "_" + month_text + "_" + "2224" + "_" + "3" + ".txt");
+                    byte[] txt7 = new byte[30];
+                    inFs7.read(txt7);
+
+
+                    if (inFs != null || inFs6 != null || inFs7 != null){    //하나라도 null이 아니라면?
+                        //즉, 하나라도 비어있지 않다면? => 저 세개 중에서 파일 내용이 하나라도 들어있다면
+                        text_12.setText("등록된 일정이 있습니다.");
+
+                    }
+
+
+                } catch (IOException e) { //파일이 없는 경우 오류가 발생하며 메시지를 보여준다.
+
+                    text_12.setText("");
+                }
+
+
             }
         });
 
@@ -1962,6 +2444,17 @@ public class weekactivity extends AppCompatActivity {
                 // TextView 클릭될 시 할 코드작성
 
                 month_text = String.valueOf(weekviews_5.getText());
+
+
+                weekviews_1.setBackgroundColor(Color.BLUE);
+                weekviews_2.setBackgroundColor(Color.BLUE);
+                weekviews_3.setBackgroundColor(Color.BLUE);
+                weekviews_4.setBackgroundColor(Color.BLUE);
+                weekviews_5.setBackgroundColor(Color.RED);
+                weekviews_6.setBackgroundColor(Color.BLUE);
+                weekviews_7.setBackgroundColor(Color.BLUE);
+
+
 
 
                 //btn1부분
@@ -2434,6 +2927,15 @@ public class weekactivity extends AppCompatActivity {
                 month_text = String.valueOf(weekviews_6.getText());
 
 
+
+                weekviews_1.setBackgroundColor(Color.BLUE);
+                weekviews_2.setBackgroundColor(Color.BLUE);
+                weekviews_3.setBackgroundColor(Color.BLUE);
+                weekviews_4.setBackgroundColor(Color.BLUE);
+                weekviews_5.setBackgroundColor(Color.BLUE);
+                weekviews_6.setBackgroundColor(Color.RED);
+                weekviews_7.setBackgroundColor(Color.BLUE);
+
                 //btn1부분
                 //////////////////////////////////////////////////////////////////////////
                 file_month = String.valueOf((cal.get(Calendar.MONTH) + month_test));
@@ -2903,6 +3405,14 @@ public class weekactivity extends AppCompatActivity {
 
                 month_text = String.valueOf(weekviews_7.getText());
 
+
+                weekviews_1.setBackgroundColor(Color.BLUE);
+                weekviews_2.setBackgroundColor(Color.BLUE);
+                weekviews_3.setBackgroundColor(Color.BLUE);
+                weekviews_4.setBackgroundColor(Color.BLUE);
+                weekviews_5.setBackgroundColor(Color.BLUE);
+                weekviews_6.setBackgroundColor(Color.BLUE);
+                weekviews_7.setBackgroundColor(Color.RED);
 
                 //btn1부분
                 //////////////////////////////////////////////////////////////////////////
