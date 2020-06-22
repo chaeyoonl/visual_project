@@ -67,6 +67,7 @@ public class weekactivity extends AppCompatActivity {
 
     int week_num = 0;
 
+    int yearcount = 0;
     /**
      * 연/월 텍스트뷰
      */
@@ -423,6 +424,62 @@ public class weekactivity extends AppCompatActivity {
                     //현재 날짜 텍스트뷰에 뿌려줌
                     tvDate_week.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + month_test));
 
+                    tvDate_week.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + month_test));
+                    if ((cal.get(Calendar.MONTH) + month_test) <= 0){
+                        yearcount--;
+                        //ver  바꿈.
+                        //만약 현재가 1월이면..
+                        //ver = 11
+                        if (cal.get(Calendar.MONTH) == 1) {
+                            month_test = 11;
+                        }
+                        //만약 현재가 2월이면..
+                        if (cal.get(Calendar.MONTH) == 2) {
+                            month_test = 10;
+                        }
+                        //만약 현재가 3월이면..
+                        if (cal.get(Calendar.MONTH) == 3) {
+                            month_test = 9;
+                        }
+                        //만약 현재가 4월이면..
+                        if (cal.get(Calendar.MONTH) == 4) {
+                            month_test = 8;
+                        }
+                        //만약 현재가 5월이면..
+                        if (cal.get(Calendar.MONTH) == 5) {
+                            month_test = 7;
+                        }
+                        //만약 현재가 6월이면..
+                        if (cal.get(Calendar.MONTH) == 6) {
+                            month_test = 6;
+                        }
+                        //만약 현재가 7월이면..
+                        if (cal.get(Calendar.MONTH) == 7) {
+                            month_test = 5;
+                        }
+                        //만약 현재가 8월이면..
+                        if (cal.get(Calendar.MONTH) == 8) {
+                            month_test = 4;
+                        }
+                        //만약 현재가 9월이면..
+                        if (cal.get(Calendar.MONTH) == 9) {
+                            month_test = 3;
+                        }
+                        //만약 현재가 10월이면..
+                        if (cal.get(Calendar.MONTH) == 10) {
+                            month_test = 2;
+                        }
+                        //만약 현재가 11월이면..
+                        if (cal.get(Calendar.MONTH) == 11) {
+                            month_test = 1;
+                        }
+                        //만약 현재가 12월이면..
+                        if (cal.get(Calendar.MONTH) == 12) {
+                            month_test = 0;
+                        }
+                        tvDate_week.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + month_test));
+                    }
+
 
                 }
 
@@ -498,8 +555,62 @@ public class weekactivity extends AppCompatActivity {
 
 
                     //현재 날짜 텍스트뷰에 뿌려줌
-                    tvDate_week.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + month_test));
+                    tvDate_week.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + month_test));
 
+                    tvDate_week.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + month_test));
+                    if ((cal.get(Calendar.MONTH) + month_test) > 12){
+                        yearcount++;
+                        //ver  바꿈.
+                        //만약 현재가 1월이면..
+                        if (cal.get(Calendar.MONTH) == 1) {
+                            month_test = 0;
+                        }
+                        //만약 현재가 2월이면..
+                        if (cal.get(Calendar.MONTH) == 2) {
+                            month_test = -1;
+                        }
+                        //만약 현재가 3월이면..
+                        if (cal.get(Calendar.MONTH) == 3) {
+                            month_test = -2;
+                        }
+                        //만약 현재가 4월이면..
+                        if (cal.get(Calendar.MONTH) == 4) {
+                            month_test = -3;
+                        }
+                        //만약 현재가 5월이면..
+                        if (cal.get(Calendar.MONTH) == 5) {
+                            month_test = -4;
+                        }
+                        //만약 현재가 6월이면..
+                        if (cal.get(Calendar.MONTH) == 6) {
+                            month_test = -5;
+                        }
+                        //만약 현재가 7월이면..
+                        if (cal.get(Calendar.MONTH) == 7) {
+                            month_test = -6;
+                        }
+                        //만약 현재가 8월이면..
+                        if (cal.get(Calendar.MONTH) == 8) {
+                            month_test = -7;
+                        }
+                        //만약 현재가 9월이면..
+                        if (cal.get(Calendar.MONTH) == 9) {
+                            month_test = -8;
+                        }
+                        //만약 현재가 10월이면..
+                        if (cal.get(Calendar.MONTH) == 10) {
+                            month_test = -9;
+                        }
+                        //만약 현재가 11월이면..
+                        if (cal.get(Calendar.MONTH) == 11) {
+                            month_test = -10;
+                        }
+                        //만약 현재가 12월이면..
+                        if (cal.get(Calendar.MONTH) == 12) {
+                            month_test = -11;
+                        }
+                        tvDate_week.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + month_test));
+                    }
 
                 }
 
@@ -3993,51 +4104,18 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "0002" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
 
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "0002" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "0002" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_1.setText("");
 
 
                     }
@@ -4213,52 +4291,18 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "0204" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "0204" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "0204" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
 
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
-
+                        text_2.setText("");
 
                     }
 
@@ -4430,51 +4474,18 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "0406" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
 
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "0406" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "0406" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_3.setText("");
 
 
                     }
@@ -4648,52 +4659,18 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "0608" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "0608" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "0608" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
 
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
-
+                        text_4.setText("");
 
                     }
 
@@ -4865,51 +4842,17 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "0810" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "0810" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "0810" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_5.setText("");
 
 
                     }
@@ -5083,51 +5026,18 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "1012" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
 
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "1012" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "1012" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_6.setText("");
 
 
                     }
@@ -5301,51 +5211,16 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "1214" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
-
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "1214" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "1214" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_7.setText("");
 
 
                     }
@@ -5518,51 +5393,17 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "1416" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "1416" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "1416" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_8.setText("");
 
 
                     }
@@ -5736,51 +5577,17 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "1618" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "1618" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "1618" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_9.setText("");
 
 
                     }
@@ -5954,51 +5761,15 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "1820" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
-
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "1820" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
-
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "1820" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_10.setText("");
 
 
                     }
@@ -6172,51 +5943,17 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "2022" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
 
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "2022" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
-
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "2022" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_11.setText("");
 
 
                     }
@@ -6390,51 +6127,17 @@ public class weekactivity extends AppCompatActivity {
                         //제목
                         boolean inFs = deleteFile(file_month + "_" + month_text + "_" + "2224" + "_" + "1" + ".txt");
 
-                                /*
-                                byte[] txt = new byte[30];
-                                inFs.read(txt);
-                                String str = new String(txt);
-
-
-                                dlogEdt1.setText(str);  //제목부분 EditText부분에 내용 넣어주기.
-                                inFs.close();
-
-
-
-
-                                 */
 
 
                         //장소
                         boolean inFs6 = deleteFile(file_month + "_" + month_text + "_" + "2224" + "_" + "2" + ".txt");
-                                /*
-                                byte[] txt6 = new byte[30];
-                                inFs6.read(txt6);
-                                String str6 = new String(txt6);
 
-
-
-                                dlogEdt6.setText(str6); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs6.close();
-
-
-                                 */
 
 
                         //메모
                         boolean inFs7 = deleteFile(file_month + "_" + month_text + "_" + "2224" + "_" + "3" + ".txt");
-                                /*
-                                byte[] txt7 = new byte[30];
-                                inFs7.read(txt7);
-                                String str7 = new String(txt7);
 
-
-
-                                dlogEdt7.setText(str7); //시작시간 부분 EditText부분에 내용 넣어주기.
-                                inFs7.close();
-
-
-                                 */
+                        text_12.setText("");
 
 
                     }

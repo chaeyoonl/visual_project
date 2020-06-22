@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     String fileName;
     EditText edtDiary;
 
+    int yearcount = 0;
+
 
     /**
      * 연/월 텍스트뷰
@@ -255,7 +257,64 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                 ver--;
 
-                tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + ver));
+                tvDate.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + ver));
+                if ((cal.get(Calendar.MONTH) + ver) <= 0){
+                    yearcount--;
+                    //ver  바꿈.
+                    //만약 현재가 1월이면..
+                    //ver = 11
+                    if (cal.get(Calendar.MONTH) == 1) {
+                        ver = 11;
+                    }
+                    //만약 현재가 2월이면..
+                    if (cal.get(Calendar.MONTH) == 2) {
+                        ver = 10;
+                    }
+                    //만약 현재가 3월이면..
+                    if (cal.get(Calendar.MONTH) == 3) {
+                        ver = 9;
+                    }
+                    //만약 현재가 4월이면..
+                    if (cal.get(Calendar.MONTH) == 4) {
+                        ver = 8;
+                    }
+                    //만약 현재가 5월이면..
+                    if (cal.get(Calendar.MONTH) == 5) {
+                        ver = 7;
+                    }
+                    //만약 현재가 6월이면..
+                    if (cal.get(Calendar.MONTH) == 6) {
+                        ver = 6;
+                    }
+                    //만약 현재가 7월이면..
+                    if (cal.get(Calendar.MONTH) == 7) {
+                        ver = 5;
+                    }
+                    //만약 현재가 8월이면..
+                    if (cal.get(Calendar.MONTH) == 8) {
+                        ver = 4;
+                    }
+                    //만약 현재가 9월이면..
+                    if (cal.get(Calendar.MONTH) == 9) {
+                        ver = 3;
+                    }
+                    //만약 현재가 10월이면..
+                    if (cal.get(Calendar.MONTH) == 10) {
+                        ver = 2;
+                    }
+                    //만약 현재가 11월이면..
+                    if (cal.get(Calendar.MONTH) == 11) {
+                        ver = 1;
+                    }
+                    //만약 현재가 12월이면..
+                    if (cal.get(Calendar.MONTH) == 12) {
+                        ver = 0;
+                    }
+                    tvDate.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + ver));
+                }
+
+
+
 
                 file_month = String.valueOf((cal.get(Calendar.MONTH) + ver));
 
@@ -324,7 +383,62 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ver++;
 
 
-                tvDate.setText((cal.get(Calendar.YEAR)) + "/" + (cal.get(Calendar.MONTH) + ver));
+                tvDate.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + ver));
+                if ((cal.get(Calendar.MONTH) + ver) > 12){
+                    yearcount++;
+                    //ver  바꿈.
+                    //만약 현재가 1월이면..
+                    //ver = 11
+                    if (cal.get(Calendar.MONTH) == 1) {
+                        ver = 0;
+                    }
+                    //만약 현재가 2월이면..
+                    if (cal.get(Calendar.MONTH) == 2) {
+                        ver = -1;
+                    }
+                    //만약 현재가 3월이면..
+                    if (cal.get(Calendar.MONTH) == 3) {
+                        ver = -2;
+                    }
+                    //만약 현재가 4월이면..
+                    if (cal.get(Calendar.MONTH) == 4) {
+                        ver = -3;
+                    }
+                    //만약 현재가 5월이면..
+                    if (cal.get(Calendar.MONTH) == 5) {
+                        ver = -4;
+                    }
+                    //만약 현재가 6월이면..
+                    if (cal.get(Calendar.MONTH) == 6) {
+                        ver = -5;
+                    }
+                    //만약 현재가 7월이면..
+                    if (cal.get(Calendar.MONTH) == 7) {
+                        ver = -6;
+                    }
+                    //만약 현재가 8월이면..
+                    if (cal.get(Calendar.MONTH) == 8) {
+                        ver = -7;
+                    }
+                    //만약 현재가 9월이면..
+                    if (cal.get(Calendar.MONTH) == 9) {
+                        ver = -8;
+                    }
+                    //만약 현재가 10월이면..
+                    if (cal.get(Calendar.MONTH) == 10) {
+                        ver = -9;
+                    }
+                    //만약 현재가 11월이면..
+                    if (cal.get(Calendar.MONTH) == 11) {
+                        ver = -10;
+                    }
+                    //만약 현재가 12월이면..
+                    if (cal.get(Calendar.MONTH) == 12) {
+                        ver = -11;
+                    }
+                    tvDate.setText((cal.get(Calendar.YEAR) + yearcount) + "/" + (cal.get(Calendar.MONTH) + ver));
+                }
+
                 file_month = String.valueOf((cal.get(Calendar.MONTH) + ver));
 
 
